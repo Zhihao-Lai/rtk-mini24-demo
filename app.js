@@ -6,7 +6,6 @@ const detailMeta = document.getElementById("detailMeta");
 const inputStrip = document.getElementById("inputStrip");
 const sceneGrid = document.getElementById("sceneGrid");
 const viewButtons = Array.from(document.querySelectorAll("#viewControls [data-view]"));
-const qualityButtons = Array.from(document.querySelectorAll("#qualityControls [data-quality]"));
 const localCloudButton = document.getElementById("localCloudButton");
 const localCloudInput = document.getElementById("localCloudInput");
 
@@ -26,7 +25,6 @@ let panY = 0;
 let dragging = false;
 let dragMode = "rotate";
 let lastPointer = null;
-let currentQuality = "smooth";
 let activeLoadToken = 0;
 let renderRequested = false;
 
@@ -53,34 +51,14 @@ function setActiveView(name) {
   });
 }
 
-function setActiveQuality(name) {
-  qualityButtons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.quality === name);
-  });
-}
-
-function cloudSpecFor(scene, quality = currentQuality) {
-  const lods = scene.lods || {};
-  const key = lods[quality] ? quality : scene.defaultLod && lods[scene.defaultLod] ? scene.defaultLod : "full";
-  if (lods[key]) {
-    return { key, ...lods[key] };
-  }
+function cloudSpecFor(scene) {
   return {
-    key: "full",
-    label: "高清",
+    label: "全量",
     cloud: scene.cloud,
+    chunks: scene.chunks,
     displayPoints: scene.displayPoints,
     cloudMb: scene.cloudMb,
   };
-}
-
-function updateQualityControls(scene) {
-  const lods = scene.lods || {};
-  qualityButtons.forEach((button) => {
-    const key = button.dataset.quality;
-    button.disabled = key !== "full" && !lods[key];
-  });
-  setActiveQuality(currentQuality);
 }
 
 function applyView(name) {
@@ -311,28 +289,35 @@ async function fetchCloudBuffer(cloudSpec, loadToken) {
   return response.arrayBuffer();
 }
 
-async function loadCloud(scene, quality = currentQuality) {
+async function loadCloud(scene) {
   const loadToken = activeLoadToken + 1;
   activeLoadToken = loadToken;
-  const cloudSpec = cloudSpecFor(scene, quality);
+  const cloudSpec = cloudSpecFor(scene);
   currentScene = scene;
-  currentQuality = cloudSpec.key;
+  if (Number.isFinite(scene.viewYaw)) {
+    yaw = scene.viewYaw;
+  }
+  if (Number.isFinite(scene.viewPitch)) {
+    pitch = scene.viewPitch;
+  }
+  if (Number.isFinite(scene.viewZoom)) {
+    zoom = scene.viewZoom;
+  }
   pointCount = 0;
   titleEl.textContent = scene.title;
   detailTitle.textContent = scene.title;
   statusEl.textContent = `${cloudSpec.label}加载中`;
-  updateQualityControls(scene);
   inputStrip.innerHTML = "";
   scene.inputs.forEach((src, index) => {
     const figure = document.createElement("figure");
     figure.innerHTML = `<img src="${src}" alt="${scene.title}视角${index + 1}" loading="lazy" decoding="async">`;
     inputStrip.appendChild(figure);
   });
-  const metaParts = [
-    `${scene.inputs.length}张输入图`,
-    `全量${formatCount(scene.displayPoints)}点`,
-    `当前${cloudSpec.label}${formatCount(cloudSpec.displayPoints)}点`,
-  ];
+  const framesTotal = scene.framesTotal ?? scene.rtkMetrics?.frames_total ?? scene.inputs.length;
+  const metaParts = [`${framesTotal}帧推理`, `全量${formatCount(scene.displayPoints)}点`];
+  if (scene.inputs.length !== framesTotal) {
+    metaParts.push(`${scene.inputs.length}张示例图`);
+  }
   if (scene.stageLabel) {
     metaParts.push(scene.stageLabel);
   }
@@ -341,8 +326,16 @@ async function loadCloud(scene, quality = currentQuality) {
   }
   if (scene.rtkMetrics && Number.isFinite(scene.rtkMetrics.rmse_3d_m_holdout)) {
     metaParts.push(`留出RTK RMSE ${scene.rtkMetrics.rmse_3d_m_holdout.toFixed(2)}m`);
+  } else if (scene.rtkMetrics && Number.isFinite(scene.rtkMetrics.rmse_3d_m_all_frames_diagnostic)) {
+    metaParts.push(`全帧拟合诊断 ${scene.rtkMetrics.rmse_3d_m_all_frames_diagnostic.toFixed(2)}m`);
   }
-  detailMeta.innerHTML = metaParts.map((part) => `<span>${part}</span>`).join("");
+  if (scene.rtkMetrics?.fit_frames && Number.isFinite(scene.rtkMetrics.fit_inliers)) {
+    metaParts.push(`一致内点 ${scene.rtkMetrics.fit_inliers}/${scene.rtkMetrics.fit_frames}`);
+  }
+  const sourceLink = scene.sourceUrl
+    ? `<a href="${scene.sourceUrl}" target="_blank" rel="noopener noreferrer">${scene.sourceCredit || "数据来源"}</a>`
+    : "";
+  detailMeta.innerHTML = metaParts.map((part) => `<span>${part}</span>`).join("") + sourceLink;
   cardByStem.forEach((card, stem) => {
     card.classList.toggle("active", stem === scene.stem);
   });
@@ -397,6 +390,7 @@ function renderGrid(items) {
   sceneGrid.innerHTML = "";
   cardByStem = new Map();
   for (const item of items) {
+    const framesTotal = item.framesTotal ?? item.rtkMetrics?.frames_total ?? item.inputs.length;
     const card = document.createElement("button");
     card.type = "button";
     card.className = "case-card";
@@ -404,7 +398,7 @@ function renderGrid(items) {
         <img src="${item.preview}" alt="${item.title}预览" loading="lazy">
       <div class="case-body">
         <h3>${item.title}</h3>
-        <p>${item.stageLabel ? `${item.stageLabel} · ` : ""}全量${formatCount(item.displayPoints)}点 · ${item.inputs.length}张输入图</p>
+        <p>${item.stageLabel ? `${item.stageLabel} · ` : ""}全量${formatCount(item.displayPoints)}点 · ${framesTotal}帧推理</p>
       </div>
     `;
     card.addEventListener("click", () => {
@@ -522,15 +516,6 @@ window.addEventListener("resize", requestRender);
 viewButtons.forEach((button) => {
   button.addEventListener("click", () => {
     applyView(button.dataset.view);
-  });
-});
-
-qualityButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    if (!currentScene || button.disabled) {
-      return;
-    }
-    loadCloud(currentScene, button.dataset.quality).catch(showError);
   });
 });
 

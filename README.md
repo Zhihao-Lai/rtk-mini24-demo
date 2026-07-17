@@ -1,12 +1,14 @@
-# RTK Mini24: VGGT / RTK comparison
+# VGGT / RTK comparison gallery
 
-Static GitHub Pages demo containing exactly two point-cloud scenes:
+Static GitHub Pages demo containing one or more image-only / RTK point-cloud comparison pairs.
 
-1. VGGT image-only reconstruction in the arbitrary VGGT frame (Z axis visually corrected).
-2. The same VGGT geometry transformed into a local WGS84 ENU metric frame with RTK FIX camera positions.
+Each pair contains:
+
+1. A VGGT image-only reconstruction in the arbitrary VGGT frame.
+2. The same VGGT geometry transformed into a local WGS84 ENU metric frame with RTK camera positions.
 
 The RTK result is a global Sim(3) transform. It changes scale, orientation and world coordinates; it does not change local point-cloud shape.
 
-The public input thumbnails are resized derivatives of the official DJI Terra sample images. EXIF/XMP metadata is intentionally stripped from the published JPEG files.
+Published input thumbnails are resized derivatives with EXIF/XMP metadata intentionally stripped.
 
-Source dataset: <https://terra-1-g.djicdn.com/6a83f01a46e9477d9af4727d9c4b9375/Terra/Sample%20File/Sample%20File.zip>
+Dataset sources, licenses and interpretation limits are listed in [ATTRIBUTION.md](ATTRIBUTION.md).
