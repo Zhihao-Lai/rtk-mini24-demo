@@ -1,5 +1,5 @@
 {
-  "defaultScene": "helenenschacht_rtk_image_rtk_20260717",
+  "defaultScene": "gulpen_pollinator_rtk_image_rtk_20260717",
   "collection": "vggt-rtk-comparison-public",
   "items": [
     {
@@ -166,6 +166,93 @@
         "model_load_sec": 4.468,
         "inference_sec": 31.991
       }
+    },
+    {
+      "stem": "gulpen_pollinator_rtk_image_only_20260717",
+      "title": "Gulpen 花田｜纯图像 VGGT",
+      "group": "road",
+      "source": "VGGT-1B image-only reconstruction; no RTK transform applied",
+      "cloud": "pointclouds/20_gulpen_rtk_image_only_full.pcd1",
+      "preview": "previews_recon/gulpen_pollinator_rtk_image_only_20260717_preview.png",
+      "inputs": [
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0025.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0037.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0049.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0061.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0073.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0085.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0097.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0108.JPG"
+      ],
+      "sourceUrl": "https://zenodo.org/records/14793347",
+      "sourceCredit": "Chieffallo 等 / Zenodo（CC BY 4.0）",
+      "originalPoints": 1200000,
+      "displayPoints": 1200000,
+      "framesTotal": 83,
+      "assetMb": 17.2,
+      "cloudMb": 11.4,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (none), robust per-cloud quantization",
+      "shortName": "20_gulpen_rtk_image_only",
+      "stageLabel": "配准前：纯图像（重复纹理挑战）",
+      "coordinateFrame": "VGGT 任意坐标（无米制尺度）",
+      "comparisonGroup": "gulpen_pollinator_full83_rtk",
+      "axisFixed": "flipZ baked into the published display asset after visual check",
+      "viewYaw": -0.01,
+      "viewPitch": -0.09,
+      "viewZoom": 0.82
+    },
+    {
+      "stem": "gulpen_pollinator_rtk_image_rtk_20260717",
+      "title": "Gulpen 花田｜图像 + RTK",
+      "group": "road",
+      "source": "VGGT-1B + DJI RTK FIX camera-centre robust Sim(3); no GCP or bundle adjustment",
+      "cloud": "pointclouds/21_gulpen_rtk_image_rtk_full.pcd1",
+      "preview": "previews_recon/gulpen_pollinator_rtk_image_rtk_20260717_preview.png",
+      "inputs": [
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0025.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0037.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0049.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0061.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0073.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0085.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0097.JPG",
+        "inputs/gulpen_pollinator_rtk_inputs/100_0439_0108.JPG"
+      ],
+      "sourceUrl": "https://zenodo.org/records/14793347",
+      "sourceCredit": "Chieffallo 等 / Zenodo（CC BY 4.0）",
+      "originalPoints": 1200000,
+      "displayPoints": 1200000,
+      "framesTotal": 83,
+      "assetMb": 17.2,
+      "cloudMb": 11.4,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (enu-to-viewer), robust per-cloud quantization",
+      "shortName": "21_gulpen_rtk_image_rtk",
+      "stageLabel": "配准后：RTK Sim(3)（低一致性诊断）",
+      "coordinateFrame": "WGS84 本地 ENU（米制；RTK FIX）",
+      "comparisonGroup": "gulpen_pollinator_full83_rtk",
+      "rtkMetrics": {
+        "position_kind": "rtk_or_dgps",
+        "frames_total": 83,
+        "fit_frames": 83,
+        "holdout_frames": 0,
+        "fit_inliers": 11,
+        "fit_inlier_ratio": 0.13253012048192772,
+        "scale_m_per_vggt_unit": 47.689921441933066,
+        "rmse_3d_m_fit_all": 41.280870995656436,
+        "rmse_3d_m_fit_inliers": 0.5651133733240411,
+        "rmse_3d_m_holdout": null,
+        "rmse_3d_m_all_frames_diagnostic": 41.280870995656436,
+        "points_enu": 1200000,
+        "model_load_sec": 27.483,
+        "inference_sec": 8.792
+      },
+      "viewYaw": 0.58,
+      "viewPitch": -1.35,
+      "viewZoom": 0.72
     }
   ]
 }

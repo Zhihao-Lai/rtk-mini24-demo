@@ -1,0 +1,9 @@
+Dataset: Machine learning for biodiversity: drone images to infer bee abundance
+Source: https://zenodo.org/records/14793347
+Authors: Ludovico Chieffallo et al.
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+This repository redistributes metadata-stripped, resized thumbnails and derived
+VGGT point clouds with source attribution. Refer to the URLs above for the
+authoritative dataset record and license terms.
