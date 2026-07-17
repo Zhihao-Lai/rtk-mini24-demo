@@ -540,7 +540,7 @@ async function boot() {
     throw new Error("加载场景列表失败");
   }
   const manifest = await response.json();
-  sceneItems = manifest.items;
+  sceneItems = manifest.items.filter((item) => !item.stem.includes("_image_only_"));
   renderGrid(sceneItems);
   const first = sceneItems.find((item) => item.stem === manifest.defaultScene) || sceneItems[0];
   applyView("angle");
