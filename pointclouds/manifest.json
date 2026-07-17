@@ -1,0 +1,126 @@
+{
+  "defaultScene": "rtk5090_mini24_image_rtk_20260717",
+  "collection": "rtk-mini24-public",
+  "items": [
+    {
+      "stem": "rtk5090_mini24_image_only_20260717",
+      "title": "RTK Mini24｜纯图像 VGGT（任意坐标）",
+      "group": "road",
+      "source": "VGGT-1B image-only reconstruction; no RTK transform applied",
+      "cloud": "pointclouds/16_rtk5090_image_only_full.pcd1",
+      "preview": "previews_recon/rtk5090_mini24_image_only_20260717_preview.png",
+      "inputs": [
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162656_0001_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162708_0013_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162720_0025_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162736_0041_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162744_0049_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162800_0065_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162808_0073_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162824_0089_V.JPG"
+      ],
+      "sourceUrl": "https://terra-1-g.djicdn.com/6a83f01a46e9477d9af4727d9c4b9375/Terra/Sample%20File/Sample%20File.zip",
+      "originalPoints": 1200000,
+      "displayPoints": 1200000,
+      "assetMb": 17.2,
+      "cloudMb": 11.4,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (none), robust per-cloud quantization, voxel fusion target 900000, voxel 56",
+      "lods": {
+        "smooth": {
+          "label": "流畅",
+          "cloud": "pointclouds/16_rtk5090_image_only_smooth.pcd1",
+          "displayPoints": 500000,
+          "cloudMb": 4.8
+        },
+        "detail": {
+          "label": "融合高清",
+          "cloud": "pointclouds/16_rtk5090_image_only_fused.pcd1",
+          "displayPoints": 900000,
+          "cloudMb": 8.6
+        },
+        "full": {
+          "label": "全量",
+          "cloud": "pointclouds/16_rtk5090_image_only_full.pcd1",
+          "displayPoints": 1200000,
+          "cloudMb": 11.4
+        }
+      },
+      "defaultLod": "smooth",
+      "shortName": "16_rtk5090_image_only",
+      "stageLabel": "配准前：纯图像（Z轴已纠正）",
+      "coordinateFrame": "VGGT 任意坐标",
+      "comparisonGroup": "rtk5090_mini24",
+      "flipZ": true,
+      "axisFixed": "runtime flipZ after visual review"
+    },
+    {
+      "stem": "rtk5090_mini24_image_rtk_20260717",
+      "title": "RTK Mini24｜VGGT + RTK（ENU）",
+      "group": "road",
+      "source": "VGGT-1B + train19 RTK FIX Sim(3); holdout5 evaluated",
+      "cloud": "pointclouds/17_rtk5090_image_rtk_full.pcd1",
+      "preview": "previews_recon/rtk5090_mini24_image_rtk_20260717_preview.png",
+      "inputs": [
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162656_0001_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162708_0013_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162720_0025_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162736_0041_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162744_0049_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162800_0065_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162808_0073_V.JPG",
+        "inputs/rtk5090_mini24_inputs/DJI_20230210162824_0089_V.JPG"
+      ],
+      "sourceUrl": "https://terra-1-g.djicdn.com/6a83f01a46e9477d9af4727d9c4b9375/Terra/Sample%20File/Sample%20File.zip",
+      "originalPoints": 1200000,
+      "displayPoints": 1200000,
+      "assetMb": 17.2,
+      "cloudMb": 11.4,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (enu-to-viewer), robust per-cloud quantization, voxel fusion target 900000, voxel 48",
+      "lods": {
+        "smooth": {
+          "label": "流畅",
+          "cloud": "pointclouds/17_rtk5090_image_rtk_smooth.pcd1",
+          "displayPoints": 500000,
+          "cloudMb": 4.8
+        },
+        "detail": {
+          "label": "融合高清",
+          "cloud": "pointclouds/17_rtk5090_image_rtk_fused.pcd1",
+          "displayPoints": 900000,
+          "cloudMb": 8.6
+        },
+        "full": {
+          "label": "全量",
+          "cloud": "pointclouds/17_rtk5090_image_rtk_full.pcd1",
+          "displayPoints": 1200000,
+          "cloudMb": 11.4
+        }
+      },
+      "defaultLod": "smooth",
+      "shortName": "17_rtk5090_image_rtk",
+      "stageLabel": "配准后：RTK Sim(3)",
+      "coordinateFrame": "WGS84 本地 ENU（米制）",
+      "comparisonGroup": "rtk5090_mini24",
+      "rtkMetrics": {
+        "position_kind": "rtk_or_dgps",
+        "frames_total": 24,
+        "fit_frames": 19,
+        "holdout_frames": 5,
+        "fit_inliers": 19,
+        "fit_inlier_ratio": 1.0,
+        "scale_m_per_vggt_unit": 267.3323897908846,
+        "rmse_3d_m_fit_all": 0.7470715448837673,
+        "rmse_3d_m_fit_inliers": 0.7470715448837673,
+        "rmse_3d_m_holdout": 0.9787008558018216,
+        "rmse_3d_m_all_frames_diagnostic": 0.8008713690948712,
+        "points_enu": 1200000,
+        "model_load_sec": 3.988,
+        "inference_sec": 1.532
+      }
+    }
+  ]
+}

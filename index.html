@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RTK Mini24｜纯图像 / RTK 对比</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f6f2;
+      --panel: #ffffff;
+      --ink: #191919;
+      --muted: #676767;
+      --line: #d7d7d0;
+      --soft: #eeeeea;
+      --accent: #0f766e;
+      --dark: #101113;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    header {
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 14px;
+    }
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 300px;
+    }
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      text-align: right;
+      min-width: 88px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 19px;
+      line-height: 1;
+    }
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    main {
+      height: calc(100vh - 64px);
+      min-height: 640px;
+      padding: 14px 18px 18px;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr) 340px;
+      grid-template-rows: auto minmax(0, 1fr);
+      grid-template-areas:
+        "scenes-head viewer detail"
+        "scenes viewer detail";
+      gap: 14px;
+    }
+    .stage {
+      display: contents;
+    }
+    .viewer-panel,
+    .detail-panel,
+    .case-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .viewer-panel {
+      grid-area: viewer;
+      min-height: 0;
+      position: relative;
+      background: var(--dark);
+    }
+    #viewerCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      cursor: grab;
+      touch-action: none;
+    }
+    #viewerCanvas:active { cursor: grabbing; }
+    .viewer-overlay {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 14px;
+      pointer-events: none;
+      color: #f6f6f2;
+    }
+    .viewer-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      text-shadow: 0 1px 10px rgba(0,0,0,.55);
+    }
+    .viewer-hint {
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      line-height: 1.45;
+      max-width: 270px;
+      text-align: right;
+      text-shadow: 0 1px 10px rgba(0,0,0,.55);
+    }
+    .viewer-status {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      pointer-events: none;
+      text-shadow: 0 1px 10px rgba(0,0,0,.55);
+    }
+    .viewer-controls,
+    .quality-controls {
+      position: absolute;
+      bottom: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .viewer-controls {
+      right: 16px;
+    }
+    .quality-controls {
+      left: 16px;
+      bottom: 42px;
+      justify-content: flex-start;
+    }
+    .viewer-controls button,
+    .quality-controls button {
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.1);
+      color: #f6f6f2;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+    .viewer-controls button:hover,
+    .viewer-controls button.active,
+    .quality-controls button:hover,
+    .quality-controls button.active {
+      border-color: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.18);
+    }
+    .quality-controls button:disabled {
+      opacity: .45;
+      cursor: default;
+    }
+    .local-file-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .detail-panel {
+      grid-area: detail;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+    .input-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      overflow: auto;
+      padding-right: 2px;
+      min-height: 0;
+      flex: 1;
+    }
+    figure {
+      margin: 0;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      min-width: 0;
+    }
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .detail-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .meta-row span {
+      border: 1px solid var(--line);
+      background: #fbfbf8;
+      border-radius: 999px;
+      padding: 5px 8px;
+    }
+    .section-head {
+      grid-area: scenes-head;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 0;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .gallery {
+      grid-area: scenes;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: auto;
+      min-height: 0;
+      padding-right: 2px;
+    }
+    .case-card {
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .case-card:hover,
+    .case-card.active {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .case-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 8;
+      object-fit: cover;
+      background: #111214;
+    }
+    .case-body {
+      padding: 11px 12px 13px;
+    }
+    .case-body h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .case-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .case-card {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      min-height: 80px;
+      padding: 8px;
+    }
+    .case-card img {
+      height: 62px;
+      aspect-ratio: auto;
+      border-radius: 6px;
+    }
+    .case-body {
+      min-width: 0;
+      padding: 0;
+    }
+    .case-body h3 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 6px;
+    }
+    @media (min-width: 1101px) {
+      body {
+        overflow: hidden;
+      }
+      header {
+        height: 58px;
+        padding: 9px 18px;
+        background: #fbfbf8;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      .subtitle {
+        margin-top: 4px;
+        font-size: 13px;
+      }
+      main {
+        height: calc(100vh - 58px);
+        min-height: 620px;
+        padding: 14px 18px 16px;
+        grid-template-columns: minmax(0, 1fr) 390px;
+        grid-template-rows: minmax(0, 1fr) 128px;
+        grid-template-areas:
+          "viewer detail"
+          "scenes scenes";
+      }
+      .section-head {
+        display: none;
+      }
+      .viewer-panel,
+      .detail-panel,
+      .case-card {
+        box-shadow: 0 1px 2px rgba(24, 24, 22, .05);
+      }
+      .viewer-panel {
+        border-radius: 9px;
+      }
+      .viewer-title {
+        font-size: 17px;
+      }
+      .viewer-status {
+        bottom: 18px;
+      }
+      .detail-panel {
+        padding: 14px;
+        gap: 12px;
+        border-radius: 9px;
+      }
+      .detail-title {
+        font-size: 20px;
+        line-height: 1.2;
+      }
+      .input-strip {
+        display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 6px;
+        gap: 8px;
+      }
+      .input-strip figure + figure {
+        margin-top: 10px;
+      }
+      figure {
+        border-radius: 6px;
+      }
+      .meta-row {
+        order: 2;
+      }
+      .gallery {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 248px;
+        grid-template-columns: none;
+        gap: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 1px 2px 6px;
+      }
+      .case-card {
+        grid-template-columns: 86px minmax(0, 1fr);
+        min-height: 112px;
+        align-items: center;
+        border-radius: 9px;
+      }
+      .case-card img {
+        width: 86px;
+        height: 82px;
+      }
+      .case-body h3 {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+    @media (max-width: 1100px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 22px 14px 16px;
+      }
+      h1 { font-size: 25px; }
+      .stats { justify-content: flex-start; min-width: 0; }
+      .stat { text-align: left; }
+      main {
+        display: block;
+        height: auto;
+        min-height: 0;
+        padding: 16px 14px 36px;
+      }
+      .stage {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+      .viewer-panel,
+      #viewerCanvas { min-height: 430px; }
+      .detail-panel { min-height: 0; }
+      .input-strip {
+        grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+        overflow: visible;
+      }
+      .viewer-overlay { flex-direction: column; align-items: stretch; }
+      .viewer-hint { text-align: left; max-width: none; }
+      .section-head {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 22px 0 12px;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        overflow: visible;
+        padding-right: 0;
+      }
+      .case-card img { aspect-ratio: 16 / 9; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>RTK Mini24｜纯图像 / RTK 对比</h1>
+      <!-- <p class="subtitle">完整分辨率航测照片，默认流畅点云；可切换细节和高清全量</p> -->
+    </div>
+  </header>
+  <main>
+    <section class="stage">
+      <div class="viewer-panel">
+        <canvas id="viewerCanvas"></canvas>
+        <div class="viewer-overlay">
+          <h2 class="viewer-title" id="viewerTitle">加载中</h2>
+          <div class="viewer-hint">左键拖拽旋转 · 右键拖拽平移 · 滚轮缩放</div>
+        </div>
+        <div class="viewer-status" id="viewerStatus">加载中</div>
+        <div class="quality-controls" id="qualityControls">
+          <button type="button" data-quality="smooth">流畅</button>
+          <button type="button" data-quality="detail">融合高清</button>
+          <button type="button" data-quality="full">全量</button>
+        </div>
+        <div class="viewer-controls" id="viewControls">
+          <input class="local-file-input" id="localCloudInput" type="file" accept=".pcd1">
+          <button type="button" id="localCloudButton">加载本地点云</button>
+          <button type="button" data-view="turn-left">左转90°</button>
+          <button type="button" data-view="turn-back">水平180°</button>
+          <button type="button" data-view="turn-right">右转90°</button>
+          <button type="button" data-view="angle">默认</button>
+          <button type="button" data-view="top">俯视</button>
+          <button type="button" data-view="reset">重置</button>
+        </div>
+      </div>
+      <aside class="detail-panel">
+        <h2 class="detail-title" id="detailTitle">加载中</h2>
+        <div class="input-strip" id="inputStrip"></div>
+        <div class="meta-row" id="detailMeta"></div>
+      </aside>
+    </section>
+    <div class="section-head">
+      <div>
+        <h2>场景</h2>
+      </div>
+    </div>
+    <section class="gallery" id="sceneGrid"></section>
+  </main>
+  <script src="viewerZoom.js?v=20260705-unlimitedzoom"></script>
+  <script src="app.js?v=20260707-fused-detail"></script>
+</body>
+</html>
