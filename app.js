@@ -45,6 +45,10 @@ function formatCount(value) {
   return String(value);
 }
 
+function sceneModeLabel(scene) {
+  return scene.rtkMetrics ? "视觉 + RTK" : "纯视觉";
+}
+
 function setActiveView(name) {
   viewButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.view === name);
@@ -314,28 +318,23 @@ async function loadCloud(scene) {
     inputStrip.appendChild(figure);
   });
   const framesTotal = scene.framesTotal ?? scene.rtkMetrics?.frames_total ?? scene.inputs.length;
-  const metaParts = [`${framesTotal}帧推理`, `全量${formatCount(scene.displayPoints)}点`];
-  if (scene.inputs.length !== framesTotal) {
-    metaParts.push(`${scene.inputs.length}张示例图`);
-  }
-  if (scene.stageLabel) {
-    metaParts.push(scene.stageLabel);
-  }
+  const metaParts = [
+    sceneModeLabel(scene),
+    `${formatCount(scene.displayPoints)}点`,
+    `${framesTotal}帧`,
+  ];
   if (scene.coordinateFrame) {
-    metaParts.push(scene.coordinateFrame);
+    metaParts.push(`坐标系：${scene.coordinateFrame}`);
   }
   if (scene.rtkMetrics && Number.isFinite(scene.rtkMetrics.rmse_3d_m_holdout)) {
-    metaParts.push(`留出RTK RMSE ${scene.rtkMetrics.rmse_3d_m_holdout.toFixed(2)}m`);
+    metaParts.push(`留出 RTK RMSE：${scene.rtkMetrics.rmse_3d_m_holdout.toFixed(2)}m`);
   } else if (scene.rtkMetrics && Number.isFinite(scene.rtkMetrics.rmse_3d_m_all_frames_diagnostic)) {
-    metaParts.push(`全帧拟合诊断 ${scene.rtkMetrics.rmse_3d_m_all_frames_diagnostic.toFixed(2)}m`);
+    metaParts.push(`全帧拟合诊断：${scene.rtkMetrics.rmse_3d_m_all_frames_diagnostic.toFixed(2)}m`);
   }
   if (scene.rtkMetrics?.fit_frames && Number.isFinite(scene.rtkMetrics.fit_inliers)) {
-    metaParts.push(`一致内点 ${scene.rtkMetrics.fit_inliers}/${scene.rtkMetrics.fit_frames}`);
+    metaParts.push(`一致内点：${scene.rtkMetrics.fit_inliers}/${scene.rtkMetrics.fit_frames}`);
   }
-  const sourceLink = scene.sourceUrl
-    ? `<a href="${scene.sourceUrl}" target="_blank" rel="noopener noreferrer">${scene.sourceCredit || "数据来源"}</a>`
-    : "";
-  detailMeta.innerHTML = metaParts.map((part) => `<span>${part}</span>`).join("") + sourceLink;
+  detailMeta.innerHTML = metaParts.map((part) => `<span>${part}</span>`).join("");
   cardByStem.forEach((card, stem) => {
     card.classList.toggle("active", stem === scene.stem);
   });
@@ -398,7 +397,7 @@ function renderGrid(items) {
         <img src="${item.preview}" alt="${item.title}预览" loading="lazy">
       <div class="case-body">
         <h3>${item.title}</h3>
-        <p>${item.stageLabel ? `${item.stageLabel} · ` : ""}全量${formatCount(item.displayPoints)}点 · ${framesTotal}帧推理</p>
+        <p>${sceneModeLabel(item)} · ${formatCount(item.displayPoints)}点 · ${framesTotal}帧</p>
       </div>
     `;
     card.addEventListener("click", () => {

@@ -27,14 +27,12 @@
       "assetMb": 17.2,
       "cloudMb": 11.4,
       "upAxis": "y",
-      "alignedToPlane": false,
-      "postprocess": "axis preserved (none), robust per-cloud quantization",
+      "alignedToPlane": true,
+      "postprocess": "dominant plane display alignment (no RTK), robust per-cloud quantization",
       "shortName": "16_rtk5090_image_only",
-      "stageLabel": "配准前：纯图像（Z轴已纠正）",
+      "stageLabel": "配准前：纯图像（主平面展示对齐）",
       "coordinateFrame": "VGGT 任意坐标",
-      "comparisonGroup": "rtk5090_mini24",
-      "flipZ": true,
-      "axisFixed": "runtime flipZ after visual review"
+      "comparisonGroup": "rtk5090_mini24"
     },
     {
       "stem": "rtk5090_mini24_image_rtk_20260717",
@@ -115,8 +113,8 @@
       "stageLabel": "配准前：纯图像 VGGT",
       "coordinateFrame": "VGGT 任意坐标（无米制尺度）",
       "comparisonGroup": "helenenschacht_full176_rtk",
-      "flipZ": true,
-      "axisFixed": "flipZ after visual check",
+      "flipY": true,
+      "axisFixed": "flipY after visual check",
       "viewZoom": 1.8
     },
     {
@@ -195,9 +193,11 @@
       "alignedToPlane": false,
       "postprocess": "axis preserved (none), robust per-cloud quantization",
       "shortName": "22_tum_downtown_rtk_image_only",
-      "stageLabel": "配准前：纯图像 VGGT",
+      "stageLabel": "配准前：纯图像（Y轴已纠正）",
       "coordinateFrame": "VGGT 任意坐标（无米制尺度）",
-      "comparisonGroup": "tum_downtown_full45_rtk"
+      "comparisonGroup": "tum_downtown_full45_rtk",
+      "flipY": true,
+      "axisFixed": "runtime flipY validated against the RTK Sim(3) up direction"
     },
     {
       "stem": "tum_downtown_rtk_image_rtk_20260717",
