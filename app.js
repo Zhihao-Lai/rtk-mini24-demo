@@ -144,7 +144,8 @@ function createProgram() {
         discard;
       }
       float edge = smoothstep(0.25, 0.12, radius);
-      gl_FragColor = vec4(v_color * (0.92 + edge * 0.08), edge);
+      vec3 lifted = pow(max(v_color, vec3(0.0)), vec3(0.78));
+      gl_FragColor = vec4(lifted * (0.92 + edge * 0.08), edge);
     }
   `);
   const linked = gl.createProgram();
@@ -166,7 +167,7 @@ function setupGl() {
   program = createProgram();
   positionBuffer = gl.createBuffer();
   colorBuffer = gl.createBuffer();
-  gl.clearColor(0.063, 0.067, 0.075, 1.0);
+  gl.clearColor(0.157, 0.192, 0.227, 1.0);
   gl.enable(gl.DEPTH_TEST);
   gl.depthFunc(gl.LEQUAL);
   gl.enable(gl.BLEND);
@@ -327,12 +328,14 @@ async function loadCloud(scene) {
     metaParts.push(`坐标系：${scene.coordinateFrame}`);
   }
   if (scene.rtkMetrics && Number.isFinite(scene.rtkMetrics.rmse_3d_m_holdout)) {
-    metaParts.push(`留出 RTK RMSE：${scene.rtkMetrics.rmse_3d_m_holdout.toFixed(2)}m`);
+    const metricLabel = scene.rtkMetricLabel || "留出 RTK RMSE";
+    metaParts.push(`${metricLabel}：${scene.rtkMetrics.rmse_3d_m_holdout.toFixed(2)}m`);
   } else if (scene.rtkMetrics && Number.isFinite(scene.rtkMetrics.rmse_3d_m_all_frames_diagnostic)) {
     metaParts.push(`全帧拟合诊断：${scene.rtkMetrics.rmse_3d_m_all_frames_diagnostic.toFixed(2)}m`);
   }
   if (scene.rtkMetrics?.fit_frames && Number.isFinite(scene.rtkMetrics.fit_inliers)) {
-    metaParts.push(`一致内点：${scene.rtkMetrics.fit_inliers}/${scene.rtkMetrics.fit_frames}`);
+    const inlierLabel = scene.rtkInlierLabel || "一致内点";
+    metaParts.push(`${inlierLabel}：${scene.rtkMetrics.fit_inliers}/${scene.rtkMetrics.fit_frames}`);
   }
   detailMeta.innerHTML = metaParts.map((part) => `<span>${part}</span>`).join("");
   cardByStem.forEach((card, stem) => {
@@ -438,7 +441,7 @@ function draw() {
     gl.uniform1f(gl.getUniformLocation(program, "u_zoom"), zoom);
     gl.uniform1f(gl.getUniformLocation(program, "u_aspect"), canvas.width / canvas.height);
     gl.uniform2f(gl.getUniformLocation(program, "u_pan"), panX, panY);
-    gl.uniform1f(gl.getUniformLocation(program, "u_point_size"), Math.max(1.5, Math.min(4.0, window.devicePixelRatio * 1.65)));
+    gl.uniform1f(gl.getUniformLocation(program, "u_point_size"), Math.max(2.0, Math.min(5.0, window.devicePixelRatio * 2.05)));
     gl.drawArrays(gl.POINTS, 0, pointCount);
   }
 }

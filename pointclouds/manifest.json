@@ -1,5 +1,5 @@
 {
-  "defaultScene": "tum_downtown_rtk_image_rtk_20260717",
+  "defaultScene": "tuniu_tw_2_townbridge64_rtk_anchored_20260717",
   "collection": "vggt-rtk-comparison-public",
   "items": [
     {
@@ -246,6 +246,94 @@
         "model_load_sec": 28.016,
         "inference_sec": 3.5
       }
+    },
+    {
+      "stem": "tuniu_tw_2_townbridge64_image_only_20260717",
+      "title": "OpenDroneMap 土牛溪小镇河谷｜纯图像 VGGT",
+      "group": "road",
+      "source": "OpenDroneMap / WebODM tuniu_tw_2",
+      "cloud": "pointclouds/24_tuniu_tw_2_townbridge64_image_only_full.pcd1",
+      "preview": "previews_recon/tuniu_tw_2_townbridge64_image_only_20260717_preview.png",
+      "inputs": [
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0055.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0067.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0079.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0091.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0103.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0115.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0127.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0139.JPG"
+      ],
+      "sourceUrl": "https://webodm.org/datasets/",
+      "sourceCredit": "OpenDroneMap / WebODM｜tuniu_tw_2",
+      "originalPoints": 6000000,
+      "displayPoints": 6000000,
+      "framesTotal": 64,
+      "assetMb": 85.8,
+      "cloudMb": 57.2,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (enu-to-viewer), robust per-cloud quantization",
+      "shortName": "24_tuniu_tw_2_townbridge64_image_only",
+      "stageLabel": "纯图像 VGGT 几何（全局 Sim(3) 仅用于统一展示坐标）",
+      "coordinateFrame": "本地 ENU（几何未逐帧修正）",
+      "comparisonGroup": "tuniu_tw_2_townbridge64_rtk",
+      "viewYaw": 0.0,
+      "viewPitch": -1.42,
+      "viewZoom": 0.95
+    },
+    {
+      "stem": "tuniu_tw_2_townbridge64_rtk_anchored_20260717",
+      "title": "OpenDroneMap 土牛溪小镇河谷｜图像 + RTK",
+      "group": "road",
+      "source": "OpenDroneMap / WebODM tuniu_tw_2",
+      "cloud": "pointclouds/25_tuniu_tw_2_townbridge64_rtk_anchored_full.pcd1",
+      "preview": "previews_recon/tuniu_tw_2_townbridge64_rtk_anchored_20260717_preview.png",
+      "inputs": [
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0055.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0067.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0079.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0091.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0103.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0115.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0127.JPG",
+        "inputs/tuniu_tw_2_townbridge64_inputs/100_0001_0139.JPG"
+      ],
+      "sourceUrl": "https://webodm.org/datasets/",
+      "sourceCredit": "OpenDroneMap / WebODM｜tuniu_tw_2",
+      "originalPoints": 6000000,
+      "displayPoints": 6000000,
+      "framesTotal": 64,
+      "assetMb": 85.8,
+      "cloudMb": 57.2,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (enu-to-viewer), robust per-cloud quantization",
+      "shortName": "25_tuniu_tw_2_townbridge64_rtk_anchored",
+      "stageLabel": "RTK 逐帧相机位置锚定",
+      "coordinateFrame": "本地 ENU（全局定向/定尺 + 逐帧 RTK 平移约束）",
+      "comparisonGroup": "tuniu_tw_2_townbridge64_rtk",
+      "rtkMetricLabel": "逐帧锚定前 Sim(3) 留出 RMSE",
+      "rtkInlierLabel": "全局 Sim(3) 一致内点",
+      "rtkMetrics": {
+        "position_kind": "rtk_or_dgps",
+        "frames_total": 64,
+        "fit_frames": 48,
+        "holdout_frames": 16,
+        "fit_inliers": 37,
+        "fit_inlier_ratio": 0.7708333333333334,
+        "scale_m_per_vggt_unit": 268.33076152786305,
+        "rmse_3d_m_fit_all": 28.566491703618897,
+        "rmse_3d_m_fit_inliers": 17.20350239240563,
+        "rmse_3d_m_holdout": 33.80255310187805,
+        "rmse_3d_m_all_frames_diagnostic": 29.96141660938309,
+        "points_enu": 6000000,
+        "model_load_sec": 27.47,
+        "inference_sec": 5.836
+      },
+      "viewYaw": 0.0,
+      "viewPitch": -1.42,
+      "viewZoom": 0.95
     }
   ]
 }
