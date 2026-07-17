@@ -1,0 +1,10 @@
+Dataset: UAV Laser Scanning and Photogrammetry of TUM Downtown Campus
+Source: https://doi.org/10.5281/zenodo.15282970
+Version: 1.2.0
+Authors: Katharina Anders, Jiapan Wang, Olaf Wysocki, Xiaoyu Huang, Sidi Liu
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+This repository redistributes metadata-stripped, resized thumbnails and derived
+VGGT point clouds with source attribution. Refer to the URLs above for the
+authoritative dataset record and license terms.

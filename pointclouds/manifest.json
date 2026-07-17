@@ -1,5 +1,5 @@
 {
-  "defaultScene": "gulpen_pollinator_rtk_image_rtk_20260717",
+  "defaultScene": "tum_downtown_rtk_image_rtk_20260717",
   "collection": "vggt-rtk-comparison-public",
   "items": [
     {
@@ -253,6 +253,86 @@
       "viewYaw": 0.58,
       "viewPitch": -1.35,
       "viewZoom": 0.72
+    },
+    {
+      "stem": "tum_downtown_rtk_image_only_20260717",
+      "title": "TUM Downtown 校园｜纯图像 VGGT",
+      "group": "road",
+      "source": "VGGT-1B image-only reconstruction; no RTK transform applied",
+      "cloud": "pointclouds/22_tum_downtown_rtk_image_only_full.pcd1",
+      "preview": "previews_recon/tum_downtown_rtk_image_only_20260717_preview.png",
+      "inputs": [
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102913_0002_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102925_0008_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102939_0015_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102951_0021_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103003_0027_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103015_0033_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103029_0040_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103041_0046_D.JPG"
+      ],
+      "sourceUrl": "https://doi.org/10.5281/zenodo.15282970",
+      "sourceCredit": "Anders 等 / TUM2TWIN（CC BY 4.0）",
+      "originalPoints": 1200000,
+      "displayPoints": 1200000,
+      "framesTotal": 45,
+      "assetMb": 17.2,
+      "cloudMb": 11.4,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (none), robust per-cloud quantization",
+      "shortName": "22_tum_downtown_rtk_image_only",
+      "stageLabel": "配准前：纯图像 VGGT",
+      "coordinateFrame": "VGGT 任意坐标（无米制尺度）",
+      "comparisonGroup": "tum_downtown_full45_rtk"
+    },
+    {
+      "stem": "tum_downtown_rtk_image_rtk_20260717",
+      "title": "TUM Downtown 校园｜图像 + RTK",
+      "group": "road",
+      "source": "VGGT-1B + RTK FIX camera-centre robust Sim(3); no GCP or bundle adjustment",
+      "cloud": "pointclouds/23_tum_downtown_rtk_image_rtk_full.pcd1",
+      "preview": "previews_recon/tum_downtown_rtk_image_rtk_20260717_preview.png",
+      "inputs": [
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102913_0002_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102925_0008_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102939_0015_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217102951_0021_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103003_0027_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103015_0033_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103029_0040_D.JPG",
+        "inputs/tum_downtown_rtk_inputs/DJI_20241217103041_0046_D.JPG"
+      ],
+      "sourceUrl": "https://doi.org/10.5281/zenodo.15282970",
+      "sourceCredit": "Anders 等 / TUM2TWIN（CC BY 4.0）",
+      "originalPoints": 1200000,
+      "displayPoints": 1200000,
+      "framesTotal": 45,
+      "assetMb": 17.2,
+      "cloudMb": 11.4,
+      "upAxis": "y",
+      "alignedToPlane": false,
+      "postprocess": "axis preserved (enu-to-viewer), robust per-cloud quantization",
+      "shortName": "23_tum_downtown_rtk_image_rtk",
+      "stageLabel": "配准后：RTK Sim(3)（轨迹一致性诊断）",
+      "coordinateFrame": "WGS84 本地 ENU（米制；RTK FIX）",
+      "comparisonGroup": "tum_downtown_full45_rtk",
+      "rtkMetrics": {
+        "position_kind": "rtk_or_dgps",
+        "frames_total": 45,
+        "fit_frames": 45,
+        "holdout_frames": 0,
+        "fit_inliers": 13,
+        "fit_inlier_ratio": 0.28888888888888886,
+        "scale_m_per_vggt_unit": 50.81872874987815,
+        "rmse_3d_m_fit_all": 2.4585478639112295,
+        "rmse_3d_m_fit_inliers": 0.5354362624326279,
+        "rmse_3d_m_holdout": null,
+        "rmse_3d_m_all_frames_diagnostic": 2.4585478639112295,
+        "points_enu": 1200000,
+        "model_load_sec": 28.016,
+        "inference_sec": 3.5
+      }
     }
   ]
 }

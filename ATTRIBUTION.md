@@ -14,8 +14,14 @@ The Helenenschacht comparison uses the Autel Evo II Pro RTK sample contributed b
 
 The Gulpen comparison uses 83 original DJI Matrice 210 RTK photographs from Chieffallo et al., [“Machine learning for biodiversity: drone images to infer bee abundance”](https://zenodo.org/records/14793347). Every image used here reports DJI `RtkFlag=50`; the dataset is published under [CC BY 4.0](DATA_LICENSES/GULPEN_CC-BY-4.0.txt). Only metadata-stripped thumbnails and derived VGGT point clouds are redistributed by this site.
 
+## TUM Downtown campus
+
+The TUM Downtown comparison uses 45 consecutive original photographs from Anders et al., [“UAV Laser Scanning and Photogrammetry of TUM Downtown Campus”](https://doi.org/10.5281/zenodo.15282970), version 1.2.0. All 45 images used here report DJI `RtkFlag=50`; the acquisition documentation identifies SAPOS Bayern NTRIP as the real-time correction source. The dataset is published under [CC BY 4.0](DATA_LICENSES/TUM2TWIN_CC-BY-4.0.txt). Only metadata-stripped thumbnails and derived VGGT point clouds are redistributed by this site.
+
 ## Interpretation
 
-“Image + RTK/PPK” means that a single global Sim(3) transform was fitted between VGGT camera centres and GNSS camera-position priors. It restores metric scale, direction and position but does not inject GNSS constraints into VGGT or bundle adjustment. Fit residuals are diagnostics, not independent geometric-accuracy measurements.
+“Image + RTK” means that a single global Sim(3) transform was fitted between VGGT camera centres and RTK camera-position priors. It restores metric scale, direction and position but does not inject RTK constraints into VGGT or bundle adjustment. Fit residuals are diagnostics, not independent geometric-accuracy measurements.
 
 The Gulpen crop grid is intentionally retained as a difficult repeated-texture case. Its robust fit has 11 consistent camera centres out of 83, while the all-frame diagnostic residual is 41.28 m; this is evidence of global visual-trajectory inconsistency, not RTK measurement accuracy.
+
+The TUM sequence has centimetre-level RTK metadata, but only 13 of 45 VGGT camera centres agree with one global Sim(3) within the 1 m RANSAC threshold. Its 2.46 m all-frame residual and 0.54 m inlier residual are trajectory-consistency diagnostics; they are not claims about point-cloud or RTK measurement accuracy.
