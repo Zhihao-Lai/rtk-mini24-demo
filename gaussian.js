@@ -128,6 +128,7 @@
     runStatus.textContent = `${run.frames.length} 帧 · ${run.cameras.length} 相机 · ${run.resolution[0]}×${run.resolution[1]}${metricText}`;
     renderControls();
     updateResult();
+    window.dispatchEvent(new CustomEvent("gaussian-run-changed", { detail: { run } }));
   }
 
   function showLoadError(error) {
@@ -171,6 +172,7 @@
     frameIndex,
     manifestLoaded: Boolean(manifest),
   });
+  window.__gaussianCurrentRun = () => run;
 
   bootGaussian().catch(showLoadError);
 })();

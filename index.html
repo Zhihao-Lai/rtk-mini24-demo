@@ -582,6 +582,151 @@
       transform: translateY(-50%) rotate(45deg);
       content: "";
     }
+    .splat-viewer-card {
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #101719;
+      box-shadow: 0 12px 36px rgba(18, 28, 30, .12);
+    }
+    .splat-viewer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 11px 13px;
+      color: #edf2ef;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+      background: #162022;
+    }
+    .splat-viewer-title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 9px;
+      min-width: 0;
+    }
+    .splat-viewer-title strong { font-size: 14px; }
+    .splat-viewer-title span {
+      color: #aab8b4;
+      font-size: 11px;
+    }
+    .splat-viewer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .splat-viewer-actions select,
+    .splat-viewer-actions button {
+      min-height: 31px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 7px;
+      padding: 5px 9px;
+      color: #e9f0ed;
+      background: rgba(255, 255, 255, .07);
+      font: inherit;
+      font-size: 11px;
+    }
+    .splat-viewer-actions button { cursor: pointer; }
+    .splat-viewer-actions button:hover {
+      border-color: #75b4a8;
+      background: rgba(75, 143, 130, .22);
+    }
+    .splat-viewport {
+      position: relative;
+      width: 100%;
+      height: clamp(470px, 64vh, 760px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(54, 79, 80, .36), transparent 48%),
+        #0d1315;
+      touch-action: none;
+    }
+    .splat-viewport canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+      outline: none;
+    }
+    .splat-loading {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: grid;
+      place-content: center;
+      gap: 12px;
+      padding: 30px;
+      color: #dfe9e5;
+      background: rgba(10, 16, 18, .82);
+      text-align: center;
+      pointer-events: none;
+    }
+    .splat-loading[hidden] { display: none; }
+    .splat-loading strong { font-size: 16px; }
+    .splat-loading span {
+      max-width: 560px;
+      color: #9fb1ab;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .splat-progress {
+      width: min(380px, 70vw);
+      height: 4px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, .12);
+    }
+    .splat-progress i {
+      display: block;
+      width: 6%;
+      height: 100%;
+      border-radius: inherit;
+      background: #67a99c;
+      transition: width .16s ease;
+    }
+    .splat-hud {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-width: calc(100% - 24px);
+      pointer-events: none;
+    }
+    .splat-hud span {
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: #dfe7e3;
+      background: rgba(9, 14, 16, .68);
+      backdrop-filter: blur(8px);
+      font-size: 11px;
+    }
+    .splat-viewer-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 8px 12px;
+      color: #9fb1ab;
+      background: #131c1e;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .splat-viewer-card:fullscreen,
+    .splat-viewer-card:-webkit-full-screen {
+      width: 100vw;
+      height: 100vh;
+      border: 0;
+      border-radius: 0;
+    }
+    .splat-viewer-card:fullscreen .splat-viewport,
+    .splat-viewer-card:-webkit-full-screen .splat-viewport {
+      height: calc(100vh - 88px);
+    }
     .gaussian-controls {
       display: grid;
       grid-template-columns: minmax(190px, 240px) minmax(180px, 250px) minmax(0, 1fr);
@@ -739,6 +884,10 @@
       .stage2-badge { justify-self: start; }
       .process-ribbon { grid-template-columns: 1fr 1fr; }
       .process-ribbon span + span::before { display: none; }
+      .splat-viewer-head,
+      .splat-viewer-foot { align-items: flex-start; flex-direction: column; }
+      .splat-viewer-actions { justify-content: flex-start; }
+      .splat-viewport { height: min(66vh, 540px); }
       .gaussian-grid { grid-template-columns: 1fr; }
       .gaussian-footer { align-items: flex-start; flex-direction: column; }
     }
@@ -799,6 +948,36 @@
       <span class="stage2-badge" id="gaussianStageBadge" aria-disabled="true">DynaForward 动态结果待恢复</span>
     </section>
 
+    <section class="splat-viewer-card" id="gaussianSplatCard" aria-labelledby="gaussianSplatTitle">
+      <header class="splat-viewer-head">
+        <div class="splat-viewer-title">
+          <strong id="gaussianSplatTitle">真实 3D Gaussian 场景</strong>
+          <span id="gaussianSplatStatus">进入本页后加载</span>
+        </div>
+        <div class="splat-viewer-actions" aria-label="3D 高斯查看器控制">
+          <select id="gaussianSplatAsset" aria-label="3D 高斯质量"></select>
+          <button type="button" id="gaussianSplatDefault">默认视角</button>
+          <button type="button" id="gaussianSplatTop">俯视</button>
+          <button type="button" id="gaussianSplatFullscreen">全屏</button>
+        </div>
+      </header>
+      <div class="splat-viewport" id="gaussianSplatViewport">
+        <div class="splat-loading" id="gaussianSplatLoading">
+          <strong id="gaussianSplatLoadingTitle">准备加载 3D Gaussian</strong>
+          <span id="gaussianSplatLoadingDetail">全量场景包含旋转、各向异性尺度、颜色和不透明度。</span>
+          <div class="splat-progress" aria-hidden="true"><i id="gaussianSplatProgress"></i></div>
+        </div>
+        <div class="splat-hud" aria-live="polite">
+          <span id="gaussianSplatCount">Gaussian 数量待读取</span>
+          <span>X 前·Y 左·Z 上</span>
+        </div>
+      </div>
+      <footer class="splat-viewer-foot">
+        <span>左键拖拽旋转 · 右键拖拽平移 · 滚轮缩放</span>
+        <span>全量交互版使用 1,717,835 个 Gaussian；SH2 PLY 可在下方下载。</span>
+      </footer>
+    </section>
+
     <div class="process-ribbon" aria-label="展示流程">
       <span>① 多相机图像输入</span>
       <span>② 前馈高斯预测</span>
@@ -854,5 +1033,15 @@
   <script src="app.js?v=20260717-full-only"></script>
   <script src="gaussian.js?v=20260719"></script>
   <script src="site.js?v=20260719"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three/three.module.js",
+        "three/addons/": "./vendor/three/addons/",
+        "@sparkjsdev/spark": "./vendor/spark.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="gaussian3d.js?v=20260719-classic-eps2d"></script>
 </body>
 </html>

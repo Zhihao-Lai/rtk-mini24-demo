@@ -2,6 +2,12 @@
 
 This site publishes metadata-stripped, resized image thumbnails and derived VGGT point clouds. It does not mirror the original image collections or precise camera-coordinate files.
 
+## 3D Gaussian viewer
+
+The interactive Gaussian scene uses [Spark 2.1.0](https://github.com/sparkjsdev/spark) and [Three.js r180](https://github.com/mrdoob/three.js), both under the MIT License. The corresponding license texts are redistributed in `vendor/LICENSE-Spark.txt` and `vendor/LICENSE-Three.txt`.
+
+The displayed scene is a derived output of the official [TuojingAI/ReconDrive](https://github.com/TuojingAI/ReconDrive) Stage2 pipeline. The default web asset contains all 1,717,835 filtered Gaussians with position, anisotropic scale, rotation, DC color and opacity. The optional SH2 PLY keeps second-order spherical harmonics at quarter density; the lower image grid remains the reference for the full renderer output.
+
 ## DJI Terra RTK sample
 
 The RTK Mini24 comparison uses images from the official [DJI Terra sample archive](https://terra-1-g.djicdn.com/6a83f01a46e9477d9af4727d9c4b9375/Terra/Sample%20File/Sample%20File.zip).

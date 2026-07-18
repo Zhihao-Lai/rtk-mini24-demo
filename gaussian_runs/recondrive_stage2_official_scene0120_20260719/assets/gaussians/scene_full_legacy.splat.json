@@ -1,0 +1,13 @@
+{
+  "schema": "recondrive-gaussian-web-splat/v1",
+  "source": "scene_master_sh4.ply",
+  "source_gaussian_count": 1717835,
+  "gaussian_count": 1717835,
+  "file_bytes": 54970720,
+  "record_bytes": 32,
+  "stride": 1,
+  "layout": "position f32x3, activated scale f32x3, RGBA u8x4, quaternion wxyz u8x4",
+  "coordinate_system": "X-forward, Y-left, Z-up",
+  "sha256": "60b7ad142832d72f5921695e8d502157bb45e04b5eab5443161bed20816ad193",
+  "limitations": "Legacy .splat keeps position, anisotropic scale, DC color, opacity, and rotation; higher-order spherical harmonics are omitted for web interactivity."
+}

@@ -17,6 +17,44 @@
       "dynamicStage": false,
       "root": "gaussian_runs/recondrive_stage2_official_scene0120_20260719/assets",
       "resolution": [518, 280],
+      "interactive3d": {
+        "defaultAsset": "full-splat",
+        "gaussianCount": 1717835,
+        "coordinateSystem": "X-forward, Y-left, Z-up",
+        "assets": [
+          {
+            "id": "full-splat",
+            "label": "全量 171.8 万 Gaussian · 52.4 MB",
+            "path": "gaussians/scene_full_legacy.splat",
+            "format": "splat",
+            "gaussianCount": 1717835,
+            "note": "默认：全量旋转、尺度、DC 颜色与不透明度"
+          },
+          {
+            "id": "sh2-ply",
+            "label": "SH2 高阶颜色 · 42.9 万 · 67.2 MB",
+            "path": "gaussians/scene_web_sh2.ply",
+            "format": "ply",
+            "gaussianCount": 429454,
+            "note": "保留二阶球谐，但为 1/4 密度 Web 版"
+          },
+          {
+            "id": "fast-splat",
+            "label": "快速预览 · 42.9 万 · 13.1 MB",
+            "path": "gaussians/scene_web_legacy.splat",
+            "format": "splat",
+            "gaussianCount": 429454,
+            "note": "低流量预览"
+          }
+        ],
+        "camera": {
+          "fov": 55,
+          "up": [0, 0, 1],
+          "position": [-6, -14, 9],
+          "lookAt": [12, 0, 2.5],
+          "topPosition": [8, -2, 82]
+        }
+      },
       "metrics": {
         "psnr": 23.14692533583868,
         "ssim": 0.6913231320324398,
@@ -47,7 +85,8 @@
       },
       "artifacts": [
         { "label": "Gaussian PLY · SH2", "path": "gaussians/scene_web_sh2.ply" },
-        { "label": "Web .splat", "path": "gaussians/scene_web_legacy.splat" },
+        { "label": "全量 Web .splat · 171.8 万", "path": "gaussians/scene_full_legacy.splat" },
+        { "label": "轻量 Web .splat · 42.9 万", "path": "gaussians/scene_web_legacy.splat" },
         { "label": "复现报告 JSON", "path": "reproduction_report.json" }
       ]
     },

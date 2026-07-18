@@ -35,7 +35,10 @@
     if (selected === "rtk") {
       window.__ensureRtkBoot?.();
       window.dispatchEvent(new Event("resize"));
+    } else {
+      window.__ensureGaussian3D?.();
     }
+    window.dispatchEvent(new CustomEvent("site-view-changed", { detail: { view: selected } }));
   }
 
   buttons.forEach((button) => {
