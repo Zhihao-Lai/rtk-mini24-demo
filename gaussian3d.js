@@ -174,9 +174,10 @@ function progressHandler(asset, token) {
     const loaded = Number(event.loaded) || 0;
     const total = Number(event.total) || 0;
     const computable = Boolean(event.lengthComputable && total > 0);
-    const percent = computable ? Math.min(94, (loaded / total) * 94) : 18;
+    const ratio = computable ? Math.min(1, loaded / total) : 0;
+    const percent = computable ? ratio * 94 : 18;
     const progressText = computable
-      ? `${Math.round((loaded / total) * 100)}% · ${formatBytes(loaded)} / ${formatBytes(total)}`
+      ? `${Math.round(ratio * 100)}% · ${formatBytes(loaded)} / ${formatBytes(total)}`
       : loaded > 0 ? `已读取 ${formatBytes(loaded)}` : "正在解码 Gaussian 数据";
     showLoading("正在加载全量 3D 场景", `${asset.note || asset.label} · ${progressText}`, percent);
   };
