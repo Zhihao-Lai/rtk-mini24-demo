@@ -1,26 +1,7 @@
-# GitHub Pages deployment
+# 部署状态
 
-This bundle is a standalone static site. The repository name used below is `rtk-mini24-demo`, producing:
+发布目标：[GitHub Pages 在线展示](https://zhihao-lai.github.io/rtk-mini24-demo/#gaussian)
 
-`https://zhihao-lai.github.io/rtk-mini24-demo/`
+源码仓库：[Zhihao-Lai/rtk-mini24-demo](https://github.com/Zhihao-Lai/rtk-mini24-demo)
 
-## One-time authentication
-
-```bash
-gh auth login -h github.com -w
-gh auth status
-```
-
-## Create and publish
-
-Run these commands from this directory after authentication:
-
-```bash
-gh repo create Zhihao-Lai/rtk-mini24-demo --public --source . --remote origin
-gh api --method POST repos/Zhihao-Lai/rtk-mini24-demo/pages -f build_type=workflow
-git push -u origin main
-gh run watch --repo Zhihao-Lai/rtk-mini24-demo
-gh api repos/Zhihao-Lai/rtk-mini24-demo/pages --jq .html_url
-```
-
-The included `.github/workflows/pages.yml` publishes the repository root with GitHub Actions.
+页面使用单一静态站点，`#rtk` 为 RTK 场景，`#gaussian` 为高斯渲染结果。本地启动方式见 [README.md](README.md)。

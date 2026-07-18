@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VGGT + RTK｜地理配准场景重建</title>
+  <link rel="icon" href="data:,">
+  <title>前馈场景重建｜RTK 几何与高斯渲染</title>
   <style>
     :root {
       color-scheme: light;
@@ -22,6 +23,34 @@
       background: var(--paper);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    [hidden] { display: none !important; }
+    .site-brand { min-width: 0; }
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      flex: 0 0 auto;
+    }
+    .site-nav button {
+      border: 0;
+      border-radius: 7px;
+      padding: 8px 12px;
+      color: var(--muted);
+      background: transparent;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .site-nav button:hover { color: var(--ink); }
+    .site-nav button.active {
+      color: #fff;
+      background: var(--accent);
     }
     header {
       padding: 14px 18px 12px;
@@ -458,17 +487,275 @@
         padding-right: 0;
       }
       .case-card img { aspect-ratio: 16 / 9; }
+      .site-nav { align-self: flex-start; }
+    }
+
+    /* Gaussian result view. It deliberately reuses the same page shell/server. */
+    body.gaussian-mode { overflow: auto; }
+    .gaussian-main {
+      display: block;
+      height: auto;
+      min-height: calc(100vh - 58px);
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+    .gaussian-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 24px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+    .gaussian-kicker {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .gaussian-hero h2 {
+      margin: 0;
+      font-size: clamp(23px, 3vw, 34px);
+      line-height: 1.08;
+      letter-spacing: -.025em;
+    }
+    .gaussian-description {
+      max-width: 780px;
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .stage2-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      border: 1px dashed #aaa9a1;
+      border-radius: 999px;
+      padding: 8px 11px;
+      color: #77766f;
+      background: #f5f5f0;
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .stage2-badge::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #aaa9a1;
+      content: "";
+    }
+    .process-ribbon {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--line);
+    }
+    .process-ribbon span {
+      position: relative;
+      padding: 10px 14px;
+      color: var(--muted);
+      background: var(--panel);
+      font-size: 12px;
+      text-align: center;
+    }
+    .process-ribbon span + span::before {
+      position: absolute;
+      left: -7px;
+      top: 50%;
+      z-index: 1;
+      width: 14px;
+      height: 14px;
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      background: var(--panel);
+      transform: translateY(-50%) rotate(45deg);
+      content: "";
+    }
+    .gaussian-controls {
+      display: grid;
+      grid-template-columns: minmax(190px, 240px) minmax(180px, 250px) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel);
+    }
+    .control-group label,
+    .control-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .run-select {
+      width: 100%;
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 6px 9px;
+      color: var(--ink);
+      background: #fbfbf8;
+      font: inherit;
+      font-size: 12px;
+    }
+    .camera-buttons,
+    .frame-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .camera-buttons button,
+    .frame-buttons button {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 7px 9px;
+      color: var(--muted);
+      background: #fbfbf8;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .camera-buttons button:hover,
+    .frame-buttons button:hover { border-color: var(--accent); }
+    .camera-buttons button.active,
+    .frame-buttons button.active {
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+    .timeline-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+    }
+    #gaussianTimeline {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+    .frame-readout {
+      min-width: 110px;
+      color: var(--ink);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+    .frame-buttons { margin-top: 8px; }
+    .gaussian-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .result-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel);
+    }
+    .result-card header {
+      height: auto;
+      min-height: 46px;
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfbf8;
+    }
+    .result-card header strong { font-size: 13px; }
+    .result-card header span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .result-media {
+      position: relative;
+      aspect-ratio: 518 / 280;
+      background: #171b1e;
+    }
+    .result-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .result-card.depth .result-media,
+    .result-card.alpha .result-media { background: #101315; }
+    .gaussian-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfbf8;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .honesty-note { max-width: 900px; }
+    .gaussian-artifacts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .gaussian-artifacts[hidden] { display: none; }
+    .gaussian-artifacts a {
+      white-space: nowrap;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: var(--panel);
+      text-decoration: none;
+    }
+    .gaussian-artifacts a:hover { border-color: var(--accent); }
+    .run-status {
+      color: var(--accent);
+      white-space: nowrap;
+      font-weight: 700;
+    }
+    @media (max-width: 760px) {
+      .gaussian-main { padding: 14px; }
+      .gaussian-hero,
+      .gaussian-controls { grid-template-columns: 1fr; }
+      .gaussian-hero { align-items: start; }
+      .stage2-badge { justify-self: start; }
+      .process-ribbon { grid-template-columns: 1fr 1fr; }
+      .process-ribbon span + span::before { display: none; }
+      .gaussian-grid { grid-template-columns: 1fr; }
+      .gaussian-footer { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <header>
-    <div>
-      <h1>VGGT + RTK｜地理配准场景重建</h1>
-      <p class="subtitle">原始航拍图像 → VGGT 稠密几何 → RTK 轨迹鲁棒定向定尺 → 逐帧相机位置锚定</p>
+    <div class="site-brand">
+      <h1>前馈场景重建</h1>
+      <p class="subtitle" id="siteSubtitle">图像 → VGGT 稠密几何 → RTK 地理配准</p>
     </div>
+    <nav class="site-nav" aria-label="展示内容">
+      <button type="button" class="active" data-site-view="rtk">RTK 场景重建</button>
+      <button type="button" data-site-view="gaussian">前馈高斯渲染</button>
+    </nav>
   </header>
-  <main>
+  <main id="rtkView" class="app-view">
     <section class="stage">
       <div class="viewer-panel">
         <canvas id="viewerCanvas"></canvas>
@@ -501,7 +788,71 @@
     </div>
     <section class="gallery" id="sceneGrid"></section>
   </main>
+
+  <main id="gaussianView" class="gaussian-main app-view" hidden>
+    <section class="gaussian-hero">
+      <div>
+        <p class="gaussian-kicker" id="gaussianRunKicker">Static Gaussian sanity sample</p>
+        <h2 id="gaussianRunTitle">DynaForward Stage1 静态高斯结果</h2>
+        <p class="gaussian-description" id="gaussianRunDescription">展示同一时刻、同一相机下的输入参考、高斯渲染 RGB、投影深度与累积 Alpha。当前结果只验证静态 Stage1 输出链路。</p>
+      </div>
+      <span class="stage2-badge" id="gaussianStageBadge" aria-disabled="true">DynaForward 动态结果待恢复</span>
+    </section>
+
+    <div class="process-ribbon" aria-label="展示流程">
+      <span>① 多相机图像输入</span>
+      <span>② 前馈高斯预测</span>
+      <span>③ Gaussian RGB 渲染</span>
+      <span>④ 深度 / Alpha 检查</span>
+    </div>
+
+    <section class="gaussian-controls" aria-label="高斯结果选择">
+      <div class="control-group">
+        <label for="gaussianRunSelect">结果批次</label>
+        <select class="run-select" id="gaussianRunSelect"></select>
+      </div>
+      <div class="control-group">
+        <span class="control-label">相机视角</span>
+        <div class="camera-buttons" id="gaussianCameraButtons"></div>
+      </div>
+      <div class="control-group">
+        <label for="gaussianTimeline">时间帧</label>
+        <div class="timeline-row">
+          <input id="gaussianTimeline" type="range" min="0" max="6" value="3" step="1">
+          <output class="frame-readout" id="gaussianFrameReadout" for="gaussianTimeline">03 / 06</output>
+        </div>
+        <div class="frame-buttons" id="gaussianFrameButtons" aria-label="时间帧快捷选择"></div>
+      </div>
+    </section>
+
+    <section class="gaussian-grid" aria-live="polite">
+      <article class="result-card input">
+        <header><strong id="gaussianInputTitle">输入 / 参考图像</strong><span id="gaussianInputSubtitle">Ground truth RGB</span></header>
+        <div class="result-media"><img id="gaussianInputImage" alt="当前相机输入参考图像"></div>
+      </article>
+      <article class="result-card render">
+        <header><strong>高斯渲染</strong><span>Rendered RGB</span></header>
+        <div class="result-media"><img id="gaussianRenderImage" alt="当前相机高斯渲染图像"></div>
+      </article>
+      <article class="result-card depth">
+        <header><strong id="gaussianDepthTitle">投影深度</strong><span id="gaussianDepthSubtitle">Projected depth</span></header>
+        <div class="result-media"><img id="gaussianDepthImage" alt="当前相机投影深度图"></div>
+      </article>
+      <article class="result-card alpha">
+        <header><strong>累积 Alpha</strong><span>Rendered alpha</span></header>
+        <div class="result-media"><img id="gaussianAlphaImage" alt="当前相机渲染 Alpha 图"></div>
+      </article>
+    </section>
+
+    <footer class="gaussian-footer">
+      <span class="honesty-note" id="gaussianRunNote">说明：这是已跑通的 DynaForward Stage1 静态 sanity sample，只验证当前静态输出链路，不代表尚未恢复的动态 Stage2。输入与渲染按同一相机、同一帧严格对应。</span>
+      <span class="gaussian-artifacts" id="gaussianArtifacts" hidden></span>
+      <span class="run-status" id="gaussianRunStatus">7 帧 · 6 相机 · 518×280</span>
+    </footer>
+  </main>
   <script src="viewerZoom.js?v=20260705-unlimitedzoom"></script>
   <script src="app.js?v=20260717-full-only"></script>
+  <script src="gaussian.js?v=20260719"></script>
+  <script src="site.js?v=20260719"></script>
 </body>
 </html>

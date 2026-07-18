@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "defaultView": "rtk",
+  "views": [
+    {
+      "id": "rtk",
+      "label": "RTK 场景重建",
+      "route": "#rtk",
+      "kind": "pointcloud-gallery",
+      "manifest": "pointclouds/manifest.json",
+      "status": "ready"
+    },
+    {
+      "id": "gaussian",
+      "label": "前馈高斯渲染",
+      "route": "#gaussian",
+      "kind": "gaussian-result-gallery",
+      "manifest": "gaussian_runs/manifest.json",
+      "status": "ready"
+    },
+    {
+      "id": "legacy",
+      "label": "旧版地图",
+      "route": "#legacy",
+      "kind": "pointcloud-gallery",
+      "manifest": "legacy_maps/manifest.json",
+      "status": "awaiting-assets",
+      "visible": false,
+      "note": "SSD 挂载后可导入；不需要修改 RTK 或 Gaussian 页面数据结构。"
+    }
+  ]
+}

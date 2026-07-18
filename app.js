@@ -548,4 +548,18 @@ async function boot() {
   requestRender();
 }
 
-boot().catch(showError);
+let bootStarted = false;
+
+function ensureRtkBoot() {
+  if (bootStarted) {
+    requestRender();
+    return;
+  }
+  bootStarted = true;
+  boot().catch(showError);
+}
+
+window.__ensureRtkBoot = ensureRtkBoot;
+if (window.location.hash !== "#gaussian") {
+  ensureRtkBoot();
+}

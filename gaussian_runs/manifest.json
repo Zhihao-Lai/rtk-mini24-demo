@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "defaultRun": "recondrive_stage2_official_scene0120_20260719",
+  "runs": [
+    {
+      "id": "recondrive_stage2_official_scene0120_20260719",
+      "title": "ReconDrive 官方 Stage2 权重 · scene-0120",
+      "kicker": "Official ReconDrive static Gaussian reproduction",
+      "description": "官方 TuojingAI/ReconDrive 代码与 Stage2 权重的真实输出。帧 0/6 是 12 张端点输入，帧 1–5 仅作为中间新视角参考；展示 Gaussian RGB、真实期望深度与累积 Alpha。",
+      "stageBadge": "DynaForward 动态结果后补",
+      "depthLabel": "高斯渲染深度",
+      "depthSubtitle": "Expected depth (RGB+ED)",
+      "note": "说明：1,950/1,950 个权重键完整装载，相机外参使用 pickle 原生 camera-to-ego。现有 12Hz 适配器未提供车辆标注，因此本批是官方 ReconDrive Stage2 权重的静态 Gaussian 复现，不宣称已恢复动态流。",
+      "model": "TuojingAI/ReconDrive Stage2",
+      "kind": "official-static-reproduction",
+      "status": "ready",
+      "dynamicStage": false,
+      "root": "gaussian_runs/recondrive_stage2_official_scene0120_20260719/assets",
+      "resolution": [518, 280],
+      "metrics": {
+        "psnr": 23.14692533583868,
+        "ssim": 0.6913231320324398,
+        "lpips": 0.22001044585236482
+      },
+      "cameras": [
+        { "id": "CAM_FRONT", "label": "前" },
+        { "id": "CAM_FRONT_LEFT", "label": "左前" },
+        { "id": "CAM_FRONT_RIGHT", "label": "右前" },
+        { "id": "CAM_BACK", "label": "后" },
+        { "id": "CAM_BACK_LEFT", "label": "左后" },
+        { "id": "CAM_BACK_RIGHT", "label": "右后" }
+      ],
+      "frames": [
+        { "index": 0, "slug": "frame_00", "label": "t0 模型输入", "role": "endpoint-t0" },
+        { "index": 1, "slug": "frame_01", "label": "帧 01 参考", "role": "intermediate" },
+        { "index": 2, "slug": "frame_02", "label": "帧 02 参考", "role": "intermediate" },
+        { "index": 3, "slug": "frame_03", "label": "目标中点参考", "role": "target-mid" },
+        { "index": 4, "slug": "frame_04", "label": "帧 04 参考", "role": "intermediate" },
+        { "index": 5, "slug": "frame_05", "label": "帧 05 参考", "role": "intermediate" },
+        { "index": 6, "slug": "frame_06", "label": "t1 模型输入", "role": "endpoint-t1" }
+      ],
+      "outputs": {
+        "input": "gt_rgb.png",
+        "render": "rendered_rgb.png",
+        "depth": "rendered_depth.png",
+        "alpha": "rendered_alpha.png"
+      },
+      "artifacts": [
+        { "label": "Gaussian PLY · SH2", "path": "gaussians/scene_web_sh2.ply" },
+        { "label": "Web .splat", "path": "gaussians/scene_web_legacy.splat" },
+        { "label": "复现报告 JSON", "path": "reproduction_report.json" }
+      ]
+    },
+    {
+      "id": "dynaforward_stage1_sanity_20260718",
+      "title": "DynaForward Stage1 静态高斯结果",
+      "kicker": "Static Gaussian sanity sample",
+      "description": "同一时刻、同一相机下对照输入参考、高斯渲染 RGB、投影深度与累积 Alpha。当前结果只验证静态 Stage1 输出链路。",
+      "stageBadge": "DynaForward 动态结果待恢复",
+      "depthLabel": "投影深度",
+      "depthSubtitle": "Projected depth",
+      "note": "说明：这是已跑通的 DynaForward Stage1 静态 sanity sample，只验证当前静态输出链路，不代表尚未恢复的动态 Stage2。输入与渲染按同一相机、同一帧严格对应。",
+      "model": "DynaForward Stage1",
+      "kind": "static-sanity-sample",
+      "status": "ready",
+      "dynamicStage": false,
+      "root": "gaussian_runs/dynaforward_stage1_sanity_20260718/assets",
+      "resolution": [518, 280],
+      "cameras": [
+        { "id": "CAM_FRONT", "label": "前" },
+        { "id": "CAM_FRONT_LEFT", "label": "左前" },
+        { "id": "CAM_FRONT_RIGHT", "label": "右前" },
+        { "id": "CAM_BACK", "label": "后" },
+        { "id": "CAM_BACK_LEFT", "label": "左后" },
+        { "id": "CAM_BACK_RIGHT", "label": "右后" }
+      ],
+      "frames": [
+        { "index": 0, "slug": "frame_00_endpoint_t0", "label": "t0 起点", "role": "endpoint-t0" },
+        { "index": 1, "slug": "frame_01_frame", "label": "帧 01", "role": "intermediate" },
+        { "index": 2, "slug": "frame_02_frame", "label": "帧 02", "role": "intermediate" },
+        { "index": 3, "slug": "frame_03_target_mid", "label": "目标中点", "role": "target-mid" },
+        { "index": 4, "slug": "frame_04_frame", "label": "帧 04", "role": "intermediate" },
+        { "index": 5, "slug": "frame_05_frame", "label": "帧 05", "role": "intermediate" },
+        { "index": 6, "slug": "frame_06_endpoint_t1", "label": "t1 终点", "role": "endpoint-t1" }
+      ],
+      "outputs": {
+        "input": "gt_rgb.png",
+        "render": "rendered_rgb.png",
+        "depth": "projected_depth.png",
+        "alpha": "rendered_alpha.png"
+      }
+    }
+  ]
+}

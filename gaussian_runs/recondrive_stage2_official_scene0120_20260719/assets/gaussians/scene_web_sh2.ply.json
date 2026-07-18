@@ -1,0 +1,97 @@
+{
+  "export": {
+    "chunk_size": 262144,
+    "file_bytes": 70431579,
+    "format": "binary_little_endian INRIA 3DGS PLY",
+    "gaussian_count": 429454,
+    "header_bytes": 1123,
+    "properties": [
+      "x",
+      "y",
+      "z",
+      "nx",
+      "ny",
+      "nz",
+      "f_dc_0",
+      "f_dc_1",
+      "f_dc_2",
+      "f_rest_0",
+      "f_rest_1",
+      "f_rest_2",
+      "f_rest_3",
+      "f_rest_4",
+      "f_rest_5",
+      "f_rest_6",
+      "f_rest_7",
+      "f_rest_8",
+      "f_rest_9",
+      "f_rest_10",
+      "f_rest_11",
+      "f_rest_12",
+      "f_rest_13",
+      "f_rest_14",
+      "f_rest_15",
+      "f_rest_16",
+      "f_rest_17",
+      "f_rest_18",
+      "f_rest_19",
+      "f_rest_20",
+      "f_rest_21",
+      "f_rest_22",
+      "f_rest_23",
+      "opacity",
+      "scale_0",
+      "scale_1",
+      "scale_2",
+      "rot_0",
+      "rot_1",
+      "rot_2",
+      "rot_3"
+    ],
+    "property_count": 41,
+    "record_bytes": 164,
+    "sh_coefficients_per_channel": 9,
+    "sh_degree": 2,
+    "storage": {
+      "normal": "float32 zero placeholders",
+      "opacity": "float32 logit; source clipped before inverse sigmoid",
+      "position": "float32 xyz",
+      "rotation": "float32 normalized quaternion wxyz",
+      "scale": "float32 natural logarithm of activated xyz scale",
+      "sh": "float32 real SH; DC RGB then channel-major f_rest"
+    }
+  },
+  "filters": {
+    "kept_fraction": 0.24674457620886192,
+    "opacity_threshold_inclusive": 0.02,
+    "sample_mask_used": false,
+    "stride_on_flat_source_index": 4
+  },
+  "legacy_splat": "/data2/laizhihao/ReconDrive_repro_20260719/work_dirs/recondrive_official_scene0120_idx44_full_20260719_v3/gaussians/scene_web_legacy.splat",
+  "legacy_splat_format": {
+    "color": "RGB = clip(0.5 + 0.28209479177387814 * SH_DC)",
+    "file_bytes": 13742528,
+    "layout": "position f32x3, activated scale f32x3, RGBA u8x4, quaternion wxyz u8x4",
+    "limitations": "higher-order SH coefficients are discarded",
+    "record_bytes": 32
+  },
+  "legacy_splat_is_lossy": true,
+  "master_artifact": "/data2/laizhihao/ReconDrive_repro_20260719/work_dirs/recondrive_official_scene0120_idx44_full_20260719_v3/gaussians/scene_web_sh2.ply",
+  "metadata_path": "/data2/laizhihao/ReconDrive_repro_20260719/work_dirs/recondrive_official_scene0120_idx44_full_20260719_v3/gaussians/scene_web_sh2.ply.json",
+  "numeric": {
+    "exported_opacity_max": 0.9997561573982239,
+    "exported_opacity_min": 0.020005730912089348,
+    "exported_scale_max": 0.013196016661822796,
+    "exported_scale_min": 0.00044860775233246386,
+    "opacity_clip_epsilon": 1e-06
+  },
+  "schema": "recondrive-gaussian-export/v1",
+  "source": {
+    "available_sh_degree": 4,
+    "gaussian_count": 1740480,
+    "leading_shape": [
+      1740480
+    ],
+    "parameterization": "activated ReconDrive tensors"
+  }
+}
