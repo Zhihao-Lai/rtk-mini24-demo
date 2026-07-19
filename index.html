@@ -969,12 +969,12 @@
         </div>
         <div class="splat-hud" aria-live="polite">
           <span id="gaussianSplatCount">Gaussian 数量待读取</span>
-          <span>X 前·Y 左·Z 上</span>
+          <span id="gaussianSplatCoordinates">模型原始坐标系</span>
         </div>
       </div>
       <footer class="splat-viewer-foot">
         <span>左键拖拽旋转 · 右键拖拽平移 · 滚轮缩放</span>
-        <span>全量交互版使用 1,717,835 个 Gaussian；SH2 PLY 可在下方下载。</span>
+        <span id="gaussianSplatDetail">全量场景会保留位置、旋转、尺度、颜色与不透明度。</span>
       </footer>
     </section>
 
@@ -1031,7 +1031,7 @@
   </main>
   <script src="viewerZoom.js?v=20260705-unlimitedzoom"></script>
   <script src="app.js?v=20260717-full-only"></script>
-  <script src="gaussian.js?v=20260719"></script>
+  <script src="gaussian.js?v=20260719-anysplat"></script>
   <script src="site.js?v=20260719"></script>
   <script type="importmap">
     {
@@ -1042,6 +1042,6 @@
       }
     }
   </script>
-  <script type="module" src="gaussian3d.js?v=20260719-classic-eps2d-v2"></script>
+  <script type="module" src="gaussian3d.js?v=20260719-anysplat-v3"></script>
 </body>
 </html>

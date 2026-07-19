@@ -11,6 +11,8 @@ const elements = {
   loadingDetail: document.getElementById("gaussianSplatLoadingDetail"),
   progress: document.getElementById("gaussianSplatProgress"),
   count: document.getElementById("gaussianSplatCount"),
+  coordinates: document.getElementById("gaussianSplatCoordinates"),
+  detail: document.getElementById("gaussianSplatDetail"),
   gaussianView: document.getElementById("gaussianView"),
 };
 
@@ -192,6 +194,8 @@ async function loadInteractiveRun(run, force = false) {
     disposeMesh();
     elements.status.textContent = "当前批次没有可交互 3D 资产";
     elements.count.textContent = "3D Gaussian 未导出";
+    elements.coordinates.textContent = "当前批次无 3D 坐标资产";
+    elements.detail.textContent = "切换到包含可交互 Gaussian 的结果批次后会自动加载。";
     showLoading("暂无交互式 3D 场景", "请切换到 ReconDrive 官方 Stage2 复现批次。", 0);
     return;
   }
@@ -203,6 +207,8 @@ async function loadInteractiveRun(run, force = false) {
 
   const token = ++state.loadToken;
   state.asset = asset;
+  elements.coordinates.textContent = run.interactive3d.coordinateSystem || "模型原始坐标系";
+  elements.detail.textContent = asset.note || "全量 Gaussian 交互场景";
   elements.status.textContent = `${asset.label} · 加载中`;
   elements.count.textContent = `${Number(asset.gaussianCount || run.interactive3d.gaussianCount).toLocaleString()} Gaussians`;
   showLoading("正在加载全量 3D 场景", asset.note || asset.label, 5);

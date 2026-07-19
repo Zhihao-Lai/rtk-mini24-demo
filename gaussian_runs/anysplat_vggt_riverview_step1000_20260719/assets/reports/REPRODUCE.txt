@@ -1,0 +1,5 @@
+No retraining was performed. Strict-offline AnySplat replay recovered held-out cameras, then ckpt_999_rank0.pt rendered RGB+ED+alpha.
+Environment: <ANYSPLAT_ENV>
+Model: <REMOTE_WORKDIR>/weights/anysplat
+Checkpoint: <REMOTE_WORKDIR>/outputs/anysplat/vrnerf_riverview_12x448_step1000/ckpts/ckpt_999_rank0.pt
+Input: <REMOTE_WORKDIR>/inputs/vrnerf_riverview_12x448/images

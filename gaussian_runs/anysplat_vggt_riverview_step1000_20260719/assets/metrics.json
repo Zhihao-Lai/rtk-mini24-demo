@@ -1,0 +1,8 @@
+{
+  "runId": "anysplat_vggt_riverview_step1000_20260719",
+  "metrics": {
+    "psnr": 26.128599166870117,
+    "ssim": 0.7747224569320679,
+    "lpips": 0.14819645881652832
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "defaultRun": "recondrive_stage2_official_scene0120_20260719",
+  "defaultRun": "anysplat_vggt_riverview_step1000_20260719",
   "runs": [
     {
       "id": "recondrive_stage2_official_scene0120_20260719",
@@ -16,7 +16,10 @@
       "status": "ready",
       "dynamicStage": false,
       "root": "gaussian_runs/recondrive_stage2_official_scene0120_20260719/assets",
-      "resolution": [518, 280],
+      "resolution": [
+        518,
+        280
+      ],
       "interactive3d": {
         "defaultAsset": "full-splat",
         "gaussianCount": 1717835,
@@ -49,10 +52,26 @@
         ],
         "camera": {
           "fov": 55,
-          "up": [0, 0, 1],
-          "position": [-6, -14, 9],
-          "lookAt": [12, 0, 2.5],
-          "topPosition": [8, -2, 82]
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "position": [
+            -6,
+            -14,
+            9
+          ],
+          "lookAt": [
+            12,
+            0,
+            2.5
+          ],
+          "topPosition": [
+            8,
+            -2,
+            82
+          ]
         }
       },
       "metrics": {
@@ -61,21 +80,74 @@
         "lpips": 0.22001044585236482
       },
       "cameras": [
-        { "id": "CAM_FRONT", "label": "前" },
-        { "id": "CAM_FRONT_LEFT", "label": "左前" },
-        { "id": "CAM_FRONT_RIGHT", "label": "右前" },
-        { "id": "CAM_BACK", "label": "后" },
-        { "id": "CAM_BACK_LEFT", "label": "左后" },
-        { "id": "CAM_BACK_RIGHT", "label": "右后" }
+        {
+          "id": "CAM_FRONT",
+          "label": "前"
+        },
+        {
+          "id": "CAM_FRONT_LEFT",
+          "label": "左前"
+        },
+        {
+          "id": "CAM_FRONT_RIGHT",
+          "label": "右前"
+        },
+        {
+          "id": "CAM_BACK",
+          "label": "后"
+        },
+        {
+          "id": "CAM_BACK_LEFT",
+          "label": "左后"
+        },
+        {
+          "id": "CAM_BACK_RIGHT",
+          "label": "右后"
+        }
       ],
       "frames": [
-        { "index": 0, "slug": "frame_00", "label": "t0 模型输入", "role": "endpoint-t0" },
-        { "index": 1, "slug": "frame_01", "label": "帧 01 参考", "role": "intermediate" },
-        { "index": 2, "slug": "frame_02", "label": "帧 02 参考", "role": "intermediate" },
-        { "index": 3, "slug": "frame_03", "label": "目标中点参考", "role": "target-mid" },
-        { "index": 4, "slug": "frame_04", "label": "帧 04 参考", "role": "intermediate" },
-        { "index": 5, "slug": "frame_05", "label": "帧 05 参考", "role": "intermediate" },
-        { "index": 6, "slug": "frame_06", "label": "t1 模型输入", "role": "endpoint-t1" }
+        {
+          "index": 0,
+          "slug": "frame_00",
+          "label": "t0 模型输入",
+          "role": "endpoint-t0"
+        },
+        {
+          "index": 1,
+          "slug": "frame_01",
+          "label": "帧 01 参考",
+          "role": "intermediate"
+        },
+        {
+          "index": 2,
+          "slug": "frame_02",
+          "label": "帧 02 参考",
+          "role": "intermediate"
+        },
+        {
+          "index": 3,
+          "slug": "frame_03",
+          "label": "目标中点参考",
+          "role": "target-mid"
+        },
+        {
+          "index": 4,
+          "slug": "frame_04",
+          "label": "帧 04 参考",
+          "role": "intermediate"
+        },
+        {
+          "index": 5,
+          "slug": "frame_05",
+          "label": "帧 05 参考",
+          "role": "intermediate"
+        },
+        {
+          "index": 6,
+          "slug": "frame_06",
+          "label": "t1 模型输入",
+          "role": "endpoint-t1"
+        }
       ],
       "outputs": {
         "input": "gt_rgb.png",
@@ -84,10 +156,22 @@
         "alpha": "rendered_alpha.png"
       },
       "artifacts": [
-        { "label": "Gaussian PLY · SH2", "path": "gaussians/scene_web_sh2.ply" },
-        { "label": "全量 Web .splat · 171.8 万", "path": "gaussians/scene_full_legacy.splat" },
-        { "label": "轻量 Web .splat · 42.9 万", "path": "gaussians/scene_web_legacy.splat" },
-        { "label": "复现报告 JSON", "path": "reproduction_report.json" }
+        {
+          "label": "Gaussian PLY · SH2",
+          "path": "gaussians/scene_web_sh2.ply"
+        },
+        {
+          "label": "全量 Web .splat · 171.8 万",
+          "path": "gaussians/scene_full_legacy.splat"
+        },
+        {
+          "label": "轻量 Web .splat · 42.9 万",
+          "path": "gaussians/scene_web_legacy.splat"
+        },
+        {
+          "label": "复现报告 JSON",
+          "path": "reproduction_report.json"
+        }
       ]
     },
     {
@@ -104,23 +188,79 @@
       "status": "ready",
       "dynamicStage": false,
       "root": "gaussian_runs/dynaforward_stage1_sanity_20260718/assets",
-      "resolution": [518, 280],
+      "resolution": [
+        518,
+        280
+      ],
       "cameras": [
-        { "id": "CAM_FRONT", "label": "前" },
-        { "id": "CAM_FRONT_LEFT", "label": "左前" },
-        { "id": "CAM_FRONT_RIGHT", "label": "右前" },
-        { "id": "CAM_BACK", "label": "后" },
-        { "id": "CAM_BACK_LEFT", "label": "左后" },
-        { "id": "CAM_BACK_RIGHT", "label": "右后" }
+        {
+          "id": "CAM_FRONT",
+          "label": "前"
+        },
+        {
+          "id": "CAM_FRONT_LEFT",
+          "label": "左前"
+        },
+        {
+          "id": "CAM_FRONT_RIGHT",
+          "label": "右前"
+        },
+        {
+          "id": "CAM_BACK",
+          "label": "后"
+        },
+        {
+          "id": "CAM_BACK_LEFT",
+          "label": "左后"
+        },
+        {
+          "id": "CAM_BACK_RIGHT",
+          "label": "右后"
+        }
       ],
       "frames": [
-        { "index": 0, "slug": "frame_00_endpoint_t0", "label": "t0 起点", "role": "endpoint-t0" },
-        { "index": 1, "slug": "frame_01_frame", "label": "帧 01", "role": "intermediate" },
-        { "index": 2, "slug": "frame_02_frame", "label": "帧 02", "role": "intermediate" },
-        { "index": 3, "slug": "frame_03_target_mid", "label": "目标中点", "role": "target-mid" },
-        { "index": 4, "slug": "frame_04_frame", "label": "帧 04", "role": "intermediate" },
-        { "index": 5, "slug": "frame_05_frame", "label": "帧 05", "role": "intermediate" },
-        { "index": 6, "slug": "frame_06_endpoint_t1", "label": "t1 终点", "role": "endpoint-t1" }
+        {
+          "index": 0,
+          "slug": "frame_00_endpoint_t0",
+          "label": "t0 起点",
+          "role": "endpoint-t0"
+        },
+        {
+          "index": 1,
+          "slug": "frame_01_frame",
+          "label": "帧 01",
+          "role": "intermediate"
+        },
+        {
+          "index": 2,
+          "slug": "frame_02_frame",
+          "label": "帧 02",
+          "role": "intermediate"
+        },
+        {
+          "index": 3,
+          "slug": "frame_03_target_mid",
+          "label": "目标中点",
+          "role": "target-mid"
+        },
+        {
+          "index": 4,
+          "slug": "frame_04_frame",
+          "label": "帧 04",
+          "role": "intermediate"
+        },
+        {
+          "index": 5,
+          "slug": "frame_05_frame",
+          "label": "帧 05",
+          "role": "intermediate"
+        },
+        {
+          "index": 6,
+          "slug": "frame_06_endpoint_t1",
+          "label": "t1 终点",
+          "role": "endpoint-t1"
+        }
       ],
       "outputs": {
         "input": "gt_rgb.png",
@@ -128,6 +268,117 @@
         "depth": "projected_depth.png",
         "alpha": "rendered_alpha.png"
       }
+    },
+    {
+      "id": "anysplat_vggt_riverview_step1000_20260719",
+      "title": "AnySplat · VGGT 高斯重建 · Riverview",
+      "kicker": "VGGT-powered dense Gaussian winner",
+      "description": "同一组 12 张真实室内图像中，10 张用于 AnySplat 稠密高斯初始化与 1000 步后优化，2 张完全留出用于新视角检验。页面展示全量 3D Gaussian、留出视角 RGB、期望深度和 Alpha。",
+      "stageBadge": "本轮双路线视觉胜出",
+      "depthLabel": "高斯期望深度",
+      "depthSubtitle": "Expected depth (RGB+ED)",
+      "note": "公平对比：两条路线均使用相同 12 张 448×448 图像和 1000 步优化。AnySplat 为 PSNR 26.13 / SSIM 0.775 / LPIPS 0.148；VGGT→COLMAP/BA→gsplat 为 26.95 / 0.849 / 0.239。后者在 PSNR/SSIM 上略高，但留出视角明显更模糊、细杆与灯罩拉丝；本批按视觉细节、连续性和更低 LPIPS 胜出。",
+      "model": "AnySplat (VGGT backbone) + gsplat post-optimization",
+      "kind": "vggt-powered-static-gaussian-reconstruction",
+      "status": "ready",
+      "dynamicStage": false,
+      "resolution": [
+        448,
+        448
+      ],
+      "interactive3d": {
+        "defaultAsset": "full-splat",
+        "gaussianCount": 1315982,
+        "coordinateSystem": "AnySplat / VGGT 原始相机坐标系（模型未旋转）",
+        "assets": [
+          {
+            "id": "full-splat",
+            "label": "全量 131.6 万 Gaussian · 40.2 MiB",
+            "path": "gaussians/scene_full_legacy.splat",
+            "format": "splat",
+            "gaussianCount": 1315982,
+            "note": "完整密度；位置、旋转、各向异性尺度、DC 颜色与不透明度。完整 SH4 Gaussian PLY 已保留在远程实验成果中。"
+          }
+        ],
+        "camera": {
+          "fov": 55,
+          "up": [
+            0.0040746429,
+            -0.999936406,
+            0.0105157644
+          ],
+          "position": [
+            -0.2870320976,
+            -0.0058183535,
+            0.1826357096
+          ],
+          "lookAt": [
+            -0.2469941837,
+            -0.0005449346,
+            0.6685673837
+          ],
+          "topPosition": [
+            0.8,
+            -3.0,
+            1.0
+          ]
+        }
+      },
+      "metrics": {
+        "psnr": 26.128599166870117,
+        "ssim": 0.7747224569320679,
+        "lpips": 0.14819645881652832
+      },
+      "cameras": [
+        {
+          "id": "CAM_MAIN",
+          "label": "主视角"
+        }
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "slug": "frame_00",
+          "label": "留出视角 00 · 边界覆盖",
+          "role": "heldout"
+        },
+        {
+          "index": 1,
+          "slug": "frame_01",
+          "label": "留出视角 06 · 完整覆盖",
+          "role": "heldout",
+          "default": true
+        }
+      ],
+      "outputs": {
+        "input": "gt_rgb.png",
+        "render": "rendered_rgb.png",
+        "depth": "rendered_depth.png",
+        "alpha": "rendered_alpha.png"
+      },
+      "artifacts": [
+        {
+          "label": "全量 Web .splat · 131.6 万",
+          "path": "gaussians/scene_full_legacy.splat"
+        },
+        {
+          "label": "完整导出与质量报告",
+          "path": "reports/showcase_summary.json"
+        },
+        {
+          "label": "原始相机与推荐视角",
+          "path": "reports/cameras_raw.json"
+        },
+        {
+          "label": "复现实验说明",
+          "path": "reports/REPRODUCE.txt"
+        },
+        {
+          "label": "评估指标 JSON",
+          "path": "metrics.json"
+        }
+      ],
+      "root": "gaussian_runs/anysplat_vggt_riverview_step1000_20260719/assets"
     }
   ]
 }

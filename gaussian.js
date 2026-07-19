@@ -103,7 +103,9 @@
   function applyRun(nextRun) {
     run = nextRun;
     cameraId = run.cameras[0].id;
-    frameIndex = run.frames.find((frame) => frame.role === "target-mid")?.index ?? run.frames[0].index;
+    frameIndex = run.frames.find((frame) => frame.default)?.index
+      ?? run.frames.find((frame) => frame.role === "target-mid")?.index
+      ?? run.frames[0].index;
     kicker.textContent = run.kicker || "Static Gaussian result";
     title.textContent = run.title;
     description.textContent = run.description;

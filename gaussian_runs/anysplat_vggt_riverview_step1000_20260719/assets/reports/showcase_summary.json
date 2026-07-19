@@ -1,0 +1,270 @@
+{
+  "method": "AnySplat + 1000-step gsplat post-optimization",
+  "eval_mode": "checkpoint-only; strict-offline AnySplat replay only recovers deterministic cameras; zero optimizer/training steps",
+  "offline_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "ANYSPLAT_MODEL": "<REMOTE_WORKDIR>/weights/anysplat"
+  },
+  "local_safetensors_key_audit": {
+    "model_file": "<REMOTE_WORKDIR>/weights/anysplat/model.safetensors",
+    "model_file_bytes": 2944896024,
+    "expected_key_count": 1405,
+    "present_key_count": 1405,
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "strict_requested": false,
+    "load_model_return": [
+      [],
+      "[]"
+    ]
+  },
+  "input_dir": "<REMOTE_WORKDIR>/inputs/vrnerf_riverview_12x448/images",
+  "input_image_count": 12,
+  "test_every": 6,
+  "train_source_indices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "heldout_source_indices": [
+    0,
+    6
+  ],
+  "checkpoint": "<REMOTE_WORKDIR>/outputs/anysplat/vrnerf_riverview_12x448_step1000/ckpts/ckpt_999_rank0.pt",
+  "checkpoint_step": 999,
+  "gaussian_count": 1315982,
+  "raw_coordinate_bounds": {
+    "axis_order": [
+      "x",
+      "y",
+      "z"
+    ],
+    "min": [
+      -4.352679252624512,
+      -0.6302719116210938,
+      0.15067119896411896
+    ],
+    "max": [
+      2.883958339691162,
+      0.3655124306678772,
+      4.2801384925842285
+    ],
+    "quantile_levels": [
+      0.0,
+      0.001,
+      0.01,
+      0.05,
+      0.5,
+      0.95,
+      0.99,
+      0.999,
+      1.0
+    ],
+    "xyz_quantiles": [
+      [
+        -4.352679252624512,
+        -0.6302719116210938,
+        0.15067119896411896
+      ],
+      [
+        -3.7511882808208465,
+        -0.5748611160516739,
+        0.16723197858035566
+      ],
+      [
+        -2.5897662258148193,
+        -0.5277224892377853,
+        0.21119508787989616
+      ],
+      [
+        -1.2862424850463867,
+        -0.500320115685463,
+        0.3007549047470093
+      ],
+      [
+        -0.2723432928323746,
+        -0.29170748591423035,
+        0.7077502310276031
+      ],
+      [
+        0.6231314539909362,
+        0.21587157920002936,
+        2.148601388931273
+      ],
+      [
+        1.259176940917968,
+        0.22589736178517342,
+        2.9547410988807634
+      ],
+      [
+        2.463671237230309,
+        0.23741363818943567,
+        3.812563553810131
+      ],
+      [
+        2.883958339691162,
+        0.3655124306678772,
+        4.2801384925842285
+      ]
+    ],
+    "median": [
+      -0.2723432928323746,
+      -0.29170748591423035,
+      0.7077502310276031
+    ],
+    "radius_from_median_quantiles": [
+      0.06387778610184651,
+      0.07849066363023582,
+      0.10775066017153552,
+      0.20077130644318383,
+      0.5846090037495177,
+      1.8489901620172908,
+      3.2577055806399917,
+      4.5789107641541165,
+      5.364640535006375
+    ],
+    "camera_center_bounds_train_optimized": {
+      "min": [
+        -0.5255511403083801,
+        -0.0071188160218298435,
+        -0.001165329129435122
+      ],
+      "max": [
+        0.008829072117805481,
+        -0.0012826328165829182,
+        0.37217333912849426
+      ]
+    },
+    "camera_center_bounds_validation": {
+      "min": [
+        -0.2870320975780487,
+        -0.005818353500217199,
+        -0.059917252510786057
+      ],
+      "max": [
+        0.07116291671991348,
+        -0.00022281517158262432,
+        0.18263570964336395
+      ]
+    }
+  },
+  "camera_json": "reports/cameras_raw.json",
+  "spark_recommended_camera": {
+    "coordinate_space": "raw AnySplat / checkpoint coordinates; no Gaussian transform applied",
+    "source_validation_frame": "006_21_DSC0055.png",
+    "position": [
+      -0.2870320975780487,
+      -0.005818353500217199,
+      0.18263570964336395
+    ],
+    "lookAt": [
+      -0.24699418371703127,
+      -0.0005449345907198632,
+      0.6685673836550347
+    ],
+    "up": [
+      0.004074642917190459,
+      -0.9999364059700002,
+      0.010515764399050031
+    ],
+    "fov_degrees": 93.39999791440896,
+    "near": 0.04161333539968586,
+    "far": 2.8144882577097423,
+    "look_direction": [
+      0.08211105785472085,
+      0.010814899264557018,
+      0.9965645047521391
+    ],
+    "focus_distance": 0.4876068450105288
+  },
+  "original_metrics": {
+    "psnr": 26.128599166870117,
+    "ssim": 0.7747224569320679,
+    "lpips": 0.14819645881652832,
+    "ellipse_time": 0.004725456237792969,
+    "num_GS": 1315982
+  },
+  "showcase_frames": [
+    {
+      "frame": "heldout_0000",
+      "source_index": 0,
+      "image_name": "000_21_DSC0001.png",
+      "height": 448,
+      "width": 448,
+      "render_seconds": 94.4614405632019,
+      "psnr": 22.713821506663436,
+      "alpha_mean": 0.8046526312828064,
+      "alpha_median": 0.9993494749069214,
+      "alpha_coverage_gt_0_01": 0.8977698501275511,
+      "alpha_coverage_gt_0_10": 0.8629972496811225,
+      "alpha_coverage_gt_0_50": 0.8058583785076531,
+      "rgb_black_ratio_lt_0_02": 0.1612872688137755,
+      "black_and_low_alpha_ratio": 0.13643973214285715,
+      "depth_valid_ratio": 0.8977698501275511,
+      "depth_p02": 0.2249759316444397,
+      "depth_p98": 2.141624307632446,
+      "visible_gaussian_project_count": 1259563
+    },
+    {
+      "frame": "heldout_0001",
+      "source_index": 6,
+      "image_name": "006_21_DSC0055.png",
+      "height": 448,
+      "width": 448,
+      "render_seconds": 0.006577730178833008,
+      "psnr": 29.54615410355611,
+      "alpha_mean": 0.9864227771759033,
+      "alpha_median": 0.9995039105415344,
+      "alpha_coverage_gt_0_01": 1.0,
+      "alpha_coverage_gt_0_10": 1.0,
+      "alpha_coverage_gt_0_50": 0.9985501036352041,
+      "rgb_black_ratio_lt_0_02": 0.022261639030612245,
+      "black_and_low_alpha_ratio": 0.0,
+      "depth_valid_ratio": 1.0,
+      "depth_p02": 0.13970068603754043,
+      "depth_p98": 1.9352397847175604,
+      "visible_gaussian_project_count": 1028554
+    }
+  ],
+  "showcase_averages": {
+    "render_seconds": 47.23400914669037,
+    "psnr": 26.12998780510977,
+    "alpha_mean": 0.8955377042293549,
+    "alpha_coverage_gt_0_01": 0.9488849250637755,
+    "alpha_coverage_gt_0_10": 0.9314986248405612,
+    "alpha_coverage_gt_0_50": 0.9022042410714286,
+    "rgb_black_ratio_lt_0_02": 0.09177445392219387,
+    "black_and_low_alpha_ratio": 0.06821986607142858,
+    "depth_valid_ratio": 0.9488849250637755
+  },
+  "legacy_splat": {
+    "path": "gaussians/scene_full_legacy.splat",
+    "record_bytes": 32,
+    "gaussian_count": 1315982,
+    "bytes": 42111424,
+    "sha256": "df15b15572b344d55b4a8055dc326a8e616d6729c99752226053e85ca3a2c704",
+    "layout": "position float32x3; activated scale float32x3; DC-derived RGBA uint8x4; normalized quaternion wxyz uint8x4",
+    "higher_order_sh_preserved": false
+  },
+  "master_ply_validation": {
+    "path": "<REMOTE_WORKDIR>/outputs/anysplat/vrnerf_riverview_12x448_step1000/ply/point_cloud_999.ply",
+    "bytes": 468491799,
+    "vertex_count": 1315982,
+    "property_count": 89,
+    "higher_order_sh_property_count": 72,
+    "full_sh_degree": 4,
+    "quaternion_order": "wxyz",
+    "scale_storage": "natural log",
+    "opacity_storage": "logit",
+    "required_properties_missing": []
+  },
+  "elapsed_seconds": 131.6816132068634
+}
