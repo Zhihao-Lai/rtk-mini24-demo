@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "defaultRun": "anysplat_vggt_riverview_step1000_20260719",
+  "defaultRun": "anysplat_vggt_nanjing_viaduct_step1000_20260719",
   "runs": [
     {
       "id": "recondrive_stage2_official_scene0120_20260719",
@@ -379,6 +379,121 @@
         }
       ],
       "root": "gaussian_runs/anysplat_vggt_riverview_step1000_20260719/assets"
+    },
+    {
+      "id": "anysplat_vggt_nanjing_viaduct_step1000_20260719",
+      "title": "AnySplat · VGGT 道路高斯重建 · 南京高架",
+      "kicker": "Road-scene Gaussian reconstruction",
+      "description": "老版道路素材的真实重跑：12 张连续高架道路图像中，10 张用于 AnySplat 稠密 Gaussian 初始化与 1000 步后优化，2 张完全留出用于新视角检验。页面展示全量可旋转 3D Gaussian、留出视角 RGB、期望深度和 Alpha。",
+      "stageBadge": "道路场景 · 142.9 万 Gaussian",
+      "depthLabel": "高斯期望深度",
+      "depthSubtitle": "Expected depth (RGB+ED)",
+      "note": "本批只使用图像，没有注入 RTK 位姿。静态 Gaussian 会稳定重建道路、桥梁、建筑与植被；跨帧运动的车辆会被淡化或消失，因此不把它宣称为动态交通重建。两张留出视角均无黑洞，Alpha>0.1 覆盖率为 100%。",
+      "model": "AnySplat (VGGT backbone) + gsplat post-optimization",
+      "kind": "vggt-powered-road-gaussian-reconstruction",
+      "status": "ready",
+      "dynamicStage": false,
+      "resolution": [
+        448,
+        448
+      ],
+      "interactive3d": {
+        "defaultAsset": "full-splat",
+        "gaussianCount": 1429219,
+        "coordinateSystem": "AnySplat / VGGT 原始相机坐标系（模型未旋转）",
+        "assets": [
+          {
+            "id": "full-splat",
+            "label": "全量 142.9 万 Gaussian · 43.6 MiB",
+            "path": "gaussians/scene_full_legacy.splat",
+            "format": "splat",
+            "gaussianCount": 1429219,
+            "note": "完整密度；位置、旋转、各向异性尺度、DC 颜色与不透明度。完整 SH4 Gaussian PLY 保留在 5090 实验成果中。"
+          }
+        ],
+        "camera": {
+          "fov": 30,
+          "up": [
+            0.0007072541112050248,
+            -0.9999845714786469,
+            -0.0055096820497211214
+          ],
+          "position": [
+            -0.0005805481341667473,
+            -0.009668722748756409,
+            -0.0021675166208297014
+          ],
+          "lookAt": [
+            0.006285670450673309,
+            -0.016769299936399716,
+            1.2874393700787634
+          ],
+          "topPosition": [
+            0.011787650175392628,
+            -20.0,
+            5.0
+          ]
+        }
+      },
+      "metrics": {
+        "psnr": 23.70450782775879,
+        "ssim": 0.7884910106658936,
+        "lpips": 0.07678228616714478
+      },
+      "cameras": [
+        {
+          "id": "CAM_MAIN",
+          "label": "主视角"
+        }
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "slug": "frame_00",
+          "label": "留出视角 00 · frame_01",
+          "role": "heldout",
+          "default": true
+        },
+        {
+          "index": 1,
+          "slug": "frame_01",
+          "label": "留出视角 06 · frame_07",
+          "role": "heldout"
+        }
+      ],
+      "outputs": {
+        "input": "gt_rgb.png",
+        "render": "rendered_rgb.png",
+        "depth": "rendered_depth.png",
+        "alpha": "rendered_alpha.png"
+      },
+      "artifacts": [
+        {
+          "label": "全量 Web .splat · 142.9 万",
+          "path": "gaussians/scene_full_legacy.splat"
+        },
+        {
+          "label": "完整导出与质量报告",
+          "path": "reports/showcase_summary.json"
+        },
+        {
+          "label": "原始相机与推荐视角",
+          "path": "reports/cameras_raw.json"
+        },
+        {
+          "label": "复现实验说明",
+          "path": "reports/REPRODUCE.txt"
+        },
+        {
+          "label": "导出后结构校验",
+          "path": "reports/post_export_validation.json"
+        },
+        {
+          "label": "评估指标 JSON",
+          "path": "metrics.json"
+        }
+      ],
+      "root": "gaussian_runs/anysplat_vggt_nanjing_viaduct_step1000_20260719/assets"
     }
   ]
 }

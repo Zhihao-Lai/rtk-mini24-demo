@@ -1,0 +1,249 @@
+{
+  "method": "AnySplat + 1000-step gsplat post-optimization",
+  "eval_mode": "checkpoint-only; strict-offline AnySplat replay recovered cameras; zero optimizer/training steps",
+  "input_dir": "/home/seu/workspace/seu_recon_demo_vggt/inputs_road/road_nanjing_viaduct",
+  "input_image_count": 12,
+  "test_every": 6,
+  "train_source_indices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "heldout_source_indices": [
+    0,
+    6
+  ],
+  "checkpoint": "/data1/laizhihao/vggt_gaussian_compare_20260719/outputs/anysplat/road_nanjing_viaduct_12_step1000_20260719/ckpts/ckpt_999_rank0.pt",
+  "checkpoint_step": 999,
+  "gaussian_count": 1429219,
+  "raw_coordinate_bounds": {
+    "axis_order": [
+      "x",
+      "y",
+      "z"
+    ],
+    "min": [
+      -2.14056658744812,
+      -4.678846836090088,
+      0.24470439553260803
+    ],
+    "max": [
+      4.896017074584961,
+      0.4406917989253998,
+      14.605895042419434
+    ],
+    "quantile_levels": [
+      0.0,
+      0.001,
+      0.01,
+      0.05,
+      0.5,
+      0.95,
+      0.99,
+      0.999,
+      1.0
+    ],
+    "xyz_quantiles": [
+      [
+        -2.14056658744812,
+        -4.678846836090088,
+        0.24470439553260803
+      ],
+      [
+        -2.0210056071281435,
+        -4.504014917373657,
+        0.2797561712265015
+      ],
+      [
+        -1.7508099555969239,
+        -4.260754976272583,
+        0.35167213022708893
+      ],
+      [
+        -1.1931742429733276,
+        -3.6850991010665894,
+        0.45892294943332673
+      ],
+      [
+        0.011787650175392628,
+        -0.1461535394191742,
+        1.7810485363006592
+      ],
+      [
+        3.647520565986632,
+        0.26547621190547943,
+        10.718587493896482
+      ],
+      [
+        4.459328956604004,
+        0.3007310861349106,
+        12.189141254425055
+      ],
+      [
+        4.751242918014524,
+        0.3237644064426416,
+        13.245763977050736
+      ],
+      [
+        4.896017074584961,
+        0.4406917989253998,
+        14.605895042419434
+      ]
+    ],
+    "median": [
+      0.011787650175392628,
+      -0.1461535394191742,
+      1.7810485363006592
+    ],
+    "radius_from_median_quantiles": [
+      0.02908467218653201,
+      0.09479633645946468,
+      0.2342924630803086,
+      0.5274740383369378,
+      1.2896447128481041,
+      10.002574933606034,
+      11.132853033952797,
+      12.42751957308315,
+      13.908375600573109
+    ],
+    "camera_center_bounds_train_optimized": {
+      "min": [
+        0.00028075501904822886,
+        0.004680299665778875,
+        -0.0008206418133340776
+      ],
+      "max": [
+        0.0026316812727600336,
+        0.17910221219062805,
+        0.02153407223522663
+      ]
+    },
+    "camera_center_bounds_validation": {
+      "min": [
+        -0.0005805481341667473,
+        -0.009668722748756409,
+        -0.0021675166208297014
+      ],
+      "max": [
+        0.001626260462217033,
+        0.07896897941827774,
+        0.007957983762025833
+      ]
+    }
+  },
+  "camera_json": "/data1/laizhihao/vggt_gaussian_compare_20260719/outputs/anysplat/road_nanjing_viaduct_12_step1000_20260719/showcase_export/cameras_raw.json",
+  "spark_recommended_camera": {
+    "coordinate_space": "raw AnySplat/checkpoint coordinates; no Gaussian transform applied",
+    "source_validation_frame": "frame_01.jpg",
+    "position": [
+      -0.0005805481341667473,
+      -0.009668722748756409,
+      -0.0021675166208297014
+    ],
+    "lookAt": [
+      0.006285670450673309,
+      -0.016769299936399716,
+      1.2874393700787634
+    ],
+    "up": [
+      0.0007072541112050248,
+      -0.9999845714786469,
+      -0.0055096820497211214
+    ],
+    "fov_degrees": 51.403314832847734,
+    "near": 0.02369908411486617,
+    "far": 31.06879893270787,
+    "look_direction": [
+      0.005324116414726672,
+      -0.0055058397998330125,
+      0.9999706693261065
+    ],
+    "focus_distance": 1.2896447128481041
+  },
+  "original_metrics": {
+    "psnr": 23.70450782775879,
+    "ssim": 0.7884910106658936,
+    "lpips": 0.07678228616714478,
+    "ellipse_time": 0.00394892692565918,
+    "num_GS": 1429219
+  },
+  "showcase_frames": [
+    {
+      "frame": "heldout_0000",
+      "source_index": 0,
+      "image_name": "frame_01.jpg",
+      "height": 448,
+      "width": 448,
+      "render_seconds": 0.2734084129333496,
+      "psnr": 23.36545361949781,
+      "alpha_mean": 0.9695063233375549,
+      "alpha_median": 0.9956091046333313,
+      "alpha_coverage_gt_0_01": 1.0,
+      "alpha_coverage_gt_0_10": 1.0,
+      "alpha_coverage_gt_0_50": 0.9973044882015306,
+      "rgb_black_ratio_lt_0_02": 0.011265345982142858,
+      "black_and_low_alpha_ratio": 0.0,
+      "depth_valid_ratio": 1.0,
+      "depth_p02": 0.4866214293241501,
+      "depth_p98": 10.828314361572266
+    },
+    {
+      "frame": "heldout_0001",
+      "source_index": 6,
+      "image_name": "frame_07.jpg",
+      "height": 448,
+      "width": 448,
+      "render_seconds": 0.0040225982666015625,
+      "psnr": 24.03716373347827,
+      "alpha_mean": 0.9841060042381287,
+      "alpha_median": 0.9990526437759399,
+      "alpha_coverage_gt_0_01": 1.0,
+      "alpha_coverage_gt_0_10": 1.0,
+      "alpha_coverage_gt_0_50": 0.999382174744898,
+      "rgb_black_ratio_lt_0_02": 0.0066914461096938774,
+      "black_and_low_alpha_ratio": 0.0,
+      "depth_valid_ratio": 1.0,
+      "depth_p02": 0.3958783316612244,
+      "depth_p98": 10.782201175689698
+    }
+  ],
+  "showcase_averages": {
+    "render_seconds": 0.13871550559997559,
+    "psnr": 23.70130867648804,
+    "alpha_mean": 0.9768061637878418,
+    "alpha_coverage_gt_0_01": 1.0,
+    "alpha_coverage_gt_0_10": 1.0,
+    "alpha_coverage_gt_0_50": 0.9983433314732143,
+    "rgb_black_ratio_lt_0_02": 0.008978396045918368,
+    "black_and_low_alpha_ratio": 0.0,
+    "depth_valid_ratio": 1.0
+  },
+  "legacy_splat": {
+    "path": "/data1/laizhihao/vggt_gaussian_compare_20260719/outputs/anysplat/road_nanjing_viaduct_12_step1000_20260719/showcase_export/gaussians/scene_full_legacy.splat",
+    "record_bytes": 32,
+    "gaussian_count": 1429219,
+    "bytes": 45735008,
+    "sha256": "b28e9bb7fbc6a5698955bf9800d33e9157697cd9bdfe47920c4722203052a0fe",
+    "layout": "position float32x3; activated scale float32x3; DC-derived RGBA uint8x4; normalized quaternion wxyz uint8x4",
+    "higher_order_sh_preserved": false
+  },
+  "master_ply_validation": {
+    "path": "/data1/laizhihao/vggt_gaussian_compare_20260719/outputs/anysplat/road_nanjing_viaduct_12_step1000_20260719/ply/point_cloud_999.ply",
+    "bytes": 508804171,
+    "vertex_count": 1429219,
+    "property_count": 89,
+    "higher_order_sh_property_count": 72,
+    "full_sh_degree": 4,
+    "quaternion_order": "wxyz",
+    "scale_storage": "natural log",
+    "opacity_storage": "logit",
+    "required_properties_missing": []
+  }
+}

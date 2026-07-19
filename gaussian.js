@@ -13,6 +13,7 @@
   const runNote = document.getElementById("gaussianRunNote");
   const artifacts = document.getElementById("gaussianArtifacts");
   const runStatus = document.getElementById("gaussianRunStatus");
+  const resultGrid = document.querySelector(".gaussian-grid");
   const inputTitle = document.getElementById("gaussianInputTitle");
   const inputSubtitle = document.getElementById("gaussianInputSubtitle");
   const images = {
@@ -113,6 +114,7 @@
     depthTitle.textContent = run.depthLabel || "投影深度";
     depthSubtitle.textContent = run.depthSubtitle || "Projected depth";
     runNote.textContent = run.note || "输入与渲染按同一相机、同一帧对应。";
+    resultGrid.style.setProperty("--gaussian-media-aspect", `${run.resolution[0]} / ${run.resolution[1]}`);
 
     artifacts.innerHTML = "";
     (run.artifacts || []).forEach((artifact) => {

@@ -1,0 +1,8 @@
+{
+  "runId": "anysplat_vggt_nanjing_viaduct_step1000_20260719",
+  "metrics": {
+    "psnr": 23.70450782775879,
+    "ssim": 0.7884910106658936,
+    "lpips": 0.07678228616714478
+  }
+}

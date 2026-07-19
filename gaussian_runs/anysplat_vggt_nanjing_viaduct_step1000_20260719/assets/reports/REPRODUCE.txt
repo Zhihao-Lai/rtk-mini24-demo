@@ -1,0 +1,5 @@
+No retraining was performed. Strict-offline AnySplat replay recovered held-out cameras, then ckpt_999_rank0.pt rendered RGB+ED+alpha.
+Environment: /home/seu/miniconda3/envs/anysplat_5090
+Model: /data1/laizhihao/vggt_gaussian_compare_20260719/weights/anysplat
+Checkpoint: /data1/laizhihao/vggt_gaussian_compare_20260719/outputs/anysplat/road_nanjing_viaduct_12_step1000_20260719/ckpts/ckpt_999_rank0.pt
+Input: /home/seu/workspace/seu_recon_demo_vggt/inputs_road/road_nanjing_viaduct
