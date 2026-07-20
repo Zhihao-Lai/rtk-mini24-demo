@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "defaultRun": "anysplat_vggt_nanjing_viaduct_step1000_20260719",
+  "defaultRun": "road170_rtk_crossstrip_step2999_clean_20260720",
   "runs": [
     {
       "id": "recondrive_stage2_official_scene0120_20260719",
@@ -494,6 +494,237 @@
         }
       ],
       "root": "gaussian_runs/anysplat_vggt_nanjing_viaduct_step1000_20260719/assets"
+    },
+    {
+      "id": "road170_rtk_crossstrip_step2999_clean_20260720",
+      "title": "Road170 · VGGT + RTK/跨航带 BA + 3DGS",
+      "kicker": "170-frame aerial road reconstruction",
+      "description": "170 张 RTK 航拍图先由 VGGT 提供快速初值，再通过跨航带 SIFT、RTK 相机中心种子、分阶段 pose-prior BA 与重三角化修正几何，最后训练 3000 步 3D Gaussian 场景。",
+      "stageBadge": "道路航拍 · RTK + BA + 3DGS",
+      "depthLabel": "高斯渲染深度",
+      "depthSubtitle": "Expected depth (RGB+ED)",
+      "note": "网页使用保守清理副本：仅删除 24 / 1,804,087 个明显越出场景包围盒或尺度超过场景对角线的灾难性异常 Gaussian；不按透明度删点。清理后 22 个留出视角平均 PSNR 为 20.625 dB，Alpha>0.1 覆盖率 100%。SSIM/LPIPS 取最终 step2999 验证统计。",
+      "model": "VGGT → COLMAP/RTK BA → gsplat v1.4",
+      "kind": "vggt-rtk-ba-gsplat",
+      "status": "ready",
+      "dynamicStage": false,
+      "root": "gaussian_runs/road170_rtk_crossstrip_step2999_clean_20260720/assets",
+      "resolution": [
+        1319,
+        988
+      ],
+      "interactive3d": {
+        "defaultAsset": "full-splat",
+        "gaussianCount": 1804063,
+        "coordinateSystem": "gsplat 归一化坐标（+X≈上；RTK ENU 可由 parser_transform 恢复）",
+        "assets": [
+          {
+            "id": "full-splat",
+            "label": "保守清理全量 · 180.4 万 Gaussian · 55.0 MB",
+            "path": "gaussians/scene_full_legacy.splat",
+            "format": "splat",
+            "gaussianCount": 1804063,
+            "note": "保留全量旋转、尺度、DC 颜色与不透明度；仅移除24个灾难性离群 Gaussian"
+          }
+        ],
+        "camera": {
+          "fov": 48,
+          "up": [
+            1,
+            0,
+            0
+          ],
+          "position": [
+            3.6,
+            -4.2,
+            4.4
+          ],
+          "lookAt": [
+            0.05,
+            -0.22,
+            -0.28
+          ],
+          "topPosition": [
+            7,
+            -0.22,
+            0.15
+          ]
+        }
+      },
+      "metrics": {
+        "psnr": 20.62465096527295,
+        "ssim": 0.5812367796897888,
+        "lpips": 0.5287541151046753
+      },
+      "cameras": [
+        {
+          "id": "CAM_MAIN",
+          "label": "主相机"
+        }
+      ],
+      "frames": [
+        {
+          "index": 0,
+          "slug": "frame_00",
+          "label": "留出视角 · 原始帧 0",
+          "role": "heldout"
+        },
+        {
+          "index": 1,
+          "slug": "frame_08",
+          "label": "留出视角 · 原始帧 8",
+          "role": "heldout"
+        },
+        {
+          "index": 2,
+          "slug": "frame_16",
+          "label": "留出视角 · 原始帧 16",
+          "role": "heldout"
+        },
+        {
+          "index": 3,
+          "slug": "frame_24",
+          "label": "留出视角 · 原始帧 24",
+          "role": "heldout"
+        },
+        {
+          "index": 4,
+          "slug": "frame_32",
+          "label": "留出视角 · 原始帧 32",
+          "role": "heldout"
+        },
+        {
+          "index": 5,
+          "slug": "frame_40",
+          "label": "留出视角 · 原始帧 40",
+          "role": "heldout"
+        },
+        {
+          "index": 6,
+          "slug": "frame_48",
+          "label": "留出视角 · 原始帧 48",
+          "role": "heldout"
+        },
+        {
+          "index": 7,
+          "slug": "frame_56",
+          "label": "留出视角 · 原始帧 56",
+          "role": "heldout"
+        },
+        {
+          "index": 8,
+          "slug": "frame_64",
+          "label": "留出视角 · 原始帧 64",
+          "role": "heldout"
+        },
+        {
+          "index": 9,
+          "slug": "frame_72",
+          "label": "留出视角 · 原始帧 72",
+          "role": "heldout"
+        },
+        {
+          "index": 10,
+          "slug": "frame_80",
+          "label": "留出视角 · 原始帧 80",
+          "role": "heldout"
+        },
+        {
+          "index": 11,
+          "slug": "frame_88",
+          "label": "留出视角 · 原始帧 88",
+          "role": "heldout"
+        },
+        {
+          "index": 12,
+          "slug": "frame_96",
+          "label": "留出视角 · 原始帧 96",
+          "role": "showcase-default",
+          "default": true
+        },
+        {
+          "index": 13,
+          "slug": "frame_104",
+          "label": "留出视角 · 原始帧 104",
+          "role": "heldout"
+        },
+        {
+          "index": 14,
+          "slug": "frame_112",
+          "label": "留出视角 · 原始帧 112",
+          "role": "heldout"
+        },
+        {
+          "index": 15,
+          "slug": "frame_120",
+          "label": "留出视角 · 原始帧 120",
+          "role": "heldout"
+        },
+        {
+          "index": 16,
+          "slug": "frame_128",
+          "label": "留出视角 · 原始帧 128",
+          "role": "heldout"
+        },
+        {
+          "index": 17,
+          "slug": "frame_136",
+          "label": "留出视角 · 原始帧 136",
+          "role": "heldout"
+        },
+        {
+          "index": 18,
+          "slug": "frame_144",
+          "label": "留出视角 · 原始帧 144",
+          "role": "heldout"
+        },
+        {
+          "index": 19,
+          "slug": "frame_152",
+          "label": "留出视角 · 原始帧 152",
+          "role": "heldout"
+        },
+        {
+          "index": 20,
+          "slug": "frame_160",
+          "label": "留出视角 · 原始帧 160",
+          "role": "heldout"
+        },
+        {
+          "index": 21,
+          "slug": "frame_168",
+          "label": "留出视角 · 原始帧 168",
+          "role": "heldout"
+        }
+      ],
+      "outputs": {
+        "input": "gt_rgb.png",
+        "render": "rendered_rgb.png",
+        "depth": "rendered_depth.png",
+        "alpha": "rendered_alpha.png"
+      },
+      "artifacts": [
+        {
+          "label": "异常 Gaussian 清理报告",
+          "path": "reports/prune_report.json"
+        },
+        {
+          "label": "清理后渲染与导出报告",
+          "path": "reports/export_render_report.json"
+        },
+        {
+          "label": "step2999 验证指标",
+          "path": "reports/val_step2999.json"
+        },
+        {
+          "label": "全量 Web .splat · 180.4 万",
+          "path": "gaussians/scene_full_legacy.splat"
+        },
+        {
+          "label": "评估指标 JSON",
+          "path": "metrics.json"
+        }
+      ]
     }
   ]
 }

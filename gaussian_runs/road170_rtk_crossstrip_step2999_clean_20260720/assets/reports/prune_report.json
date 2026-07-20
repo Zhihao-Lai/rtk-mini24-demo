@@ -1,0 +1,43 @@
+{
+  "schema": "gsplat-obvious-outlier-prune/v1",
+  "source_checkpoint": "/data1/laizhihao/vggt_gaussian_compare_20260719/outputs/gsplat/road170_rtk_crossstrip_preview_v14/ckpts/ckpt_2999_rank0.pt",
+  "source_step": 2999,
+  "data_dir": "/data1/laizhihao/vggt_gaussian_compare_20260719/inputs/road170_rtk_crossstrip_clean_v13",
+  "training_normalization_enabled": true,
+  "sparse_scene_envelope": {
+    "quantile_low": 0.001,
+    "quantile_high": 0.999,
+    "low": [
+      -9.593930114110371,
+      -5.951452240794764,
+      -2.3485107299397114
+    ],
+    "high": [
+      0.5014076902447956,
+      1.1524723140858173,
+      4.542582541822977
+    ],
+    "diagonal": 14.137494684193902
+  },
+  "gaussians_before": 1804087,
+  "gaussians_after": 1804063,
+  "gaussians_rejected": 24,
+  "reject_reason_counts_with_overlap": {
+    "nonfinite_or_zero_quaternion": 0,
+    "outside_scene_envelope": 24,
+    "oversized_scale": 13,
+    "below_min_opacity": 0
+  },
+  "thresholds": {
+    "max_aabb_distance": 14.137494684193902,
+    "max_activated_scale": 14.137494684193902,
+    "min_opacity": 0.0
+  },
+  "rejected_diagnostics": {
+    "max_aabb_distance": 11538531.406069886,
+    "max_activated_scale": 16429259.719645932,
+    "min_opacity": 0.017311350688486774
+  },
+  "policy": "non-destructive obvious-outlier copy; no opacity filtering unless explicitly requested",
+  "output_checkpoint": "/data1/laizhihao/vggt_gaussian_compare_20260719/outputs/gsplat/road170_rtk_crossstrip_preview_v14/pruned_obvious_outliers_v3/ckpt_2999_pruned_obvious_outliers.pt"
+}

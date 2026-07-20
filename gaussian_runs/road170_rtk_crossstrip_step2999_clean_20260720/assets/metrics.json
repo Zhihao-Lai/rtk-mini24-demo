@@ -1,0 +1,8 @@
+{
+  "runId": "road170_rtk_crossstrip_step2999_clean_20260720",
+  "metrics": {
+    "psnr": 20.62465096527295,
+    "ssim": 0.5812367796897888,
+    "lpips": 0.5287541151046753
+  }
+}
