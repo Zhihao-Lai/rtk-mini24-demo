@@ -491,14 +491,14 @@
     }
 
     /* Gaussian result view. It deliberately reuses the same page shell/server. */
-    body.gaussian-mode { overflow: auto; }
+    body.gaussian-mode { overflow: hidden; }
     .gaussian-main {
       display: block;
-      height: auto;
-      min-height: calc(100vh - 58px);
-      max-width: 1380px;
-      margin: 0 auto;
-      padding: 18px;
+      height: calc(100vh - 58px);
+      min-height: 0;
+      max-width: none;
+      margin: 0;
+      padding: 12px;
     }
     .gaussian-hero {
       display: block;
@@ -516,9 +516,14 @@
       text-transform: uppercase;
     }
     body.gaussian-mode .gaussian-kicker,
+    body.gaussian-mode .gaussian-hero,
     body.gaussian-mode .gaussian-description,
     body.gaussian-mode .stage2-badge,
     body.gaussian-mode .process-ribbon,
+    body.gaussian-mode .gaussian-controls,
+    body.gaussian-mode .gaussian-grid,
+    body.gaussian-mode .gaussian-section-heading,
+    body.gaussian-mode .gaussian-footer,
     body.gaussian-mode .gaussian-section-heading p,
     body.gaussian-mode .result-card header span,
     body.gaussian-mode .frame-buttons,
@@ -594,7 +599,8 @@
       content: "";
     }
     .splat-viewer-card {
-      margin-top: 18px;
+      height: 100%;
+      margin-top: 0;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -648,7 +654,7 @@
     .splat-viewport {
       position: relative;
       width: 100%;
-      height: clamp(400px, 52vh, 620px);
+      height: calc(100% - 87px);
       overflow: hidden;
       background:
         radial-gradient(circle at 50% 45%, rgba(54, 79, 80, .36), transparent 48%),
@@ -911,7 +917,7 @@
       font-weight: 700;
     }
     @media (max-width: 760px) {
-      .gaussian-main { padding: 14px; }
+      .gaussian-main { padding: 10px; }
       .gaussian-hero,
       .gaussian-controls { grid-template-columns: 1fr; }
       .gaussian-hero { align-items: start; }
@@ -919,7 +925,7 @@
       .splat-viewer-head,
       .splat-viewer-foot { align-items: flex-start; flex-direction: column; }
       .splat-viewer-actions { justify-content: flex-start; }
-      .splat-viewport { height: min(66vh, 540px); }
+      .splat-viewport { height: calc(100% - 112px); }
       .gaussian-grid { grid-template-columns: 1fr; }
       .gaussian-section-heading { align-items: flex-start; flex-direction: column; }
       .gaussian-section-heading p { text-align: left; }

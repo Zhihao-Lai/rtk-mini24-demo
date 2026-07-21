@@ -22,6 +22,7 @@
     depth: document.getElementById("gaussianDepthImage"),
     alpha: document.getElementById("gaussianAlphaImage"),
   };
+  const comparisonEnabled = false;
 
   let manifest = null;
   let run = null;
@@ -49,11 +50,13 @@
     inputTitle.textContent = isEndpointInput ? "模型输入（端点）" : "参考真值（未输入）";
     inputSubtitle.textContent = isEndpointInput ? "Endpoint input RGB" : "Novel-view ground truth";
 
-    Object.entries(images).forEach(([key, image]) => {
-      image.src = assetPath(frame, key);
-      image.dataset.frame = String(frameIndex);
-      image.dataset.camera = cameraId;
-    });
+    if (comparisonEnabled) {
+      Object.entries(images).forEach(([key, image]) => {
+        image.src = assetPath(frame, key);
+        image.dataset.frame = String(frameIndex);
+        image.dataset.camera = cameraId;
+      });
+    }
 
     cameraButtons.querySelectorAll("button").forEach((button) => {
       const active = button.dataset.camera === cameraId;
