@@ -496,16 +496,16 @@
       display: block;
       height: auto;
       min-height: calc(100vh - 58px);
-      max-width: 1600px;
+      max-width: 1380px;
       margin: 0 auto;
       padding: 18px;
     }
     .gaussian-hero {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      align-items: end;
+      align-items: center;
       gap: 24px;
-      padding: 16px 18px;
+      padding: 18px 20px;
       border: 1px solid var(--line);
       border-radius: 10px;
       background: var(--panel);
@@ -520,7 +520,7 @@
     }
     .gaussian-hero h2 {
       margin: 0;
-      font-size: clamp(23px, 3vw, 34px);
+      font-size: clamp(22px, 2.5vw, 31px);
       line-height: 1.08;
       letter-spacing: -.025em;
     }
@@ -583,12 +583,12 @@
       content: "";
     }
     .splat-viewer-card {
-      margin-top: 12px;
+      margin-top: 18px;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 10px;
       background: #101719;
-      box-shadow: 0 12px 36px rgba(18, 28, 30, .12);
+      box-shadow: 0 8px 24px rgba(18, 28, 30, .1);
     }
     .splat-viewer-head {
       display: flex;
@@ -637,7 +637,7 @@
     .splat-viewport {
       position: relative;
       width: 100%;
-      height: clamp(470px, 64vh, 760px);
+      height: clamp(400px, 52vh, 620px);
       overflow: hidden;
       background:
         radial-gradient(circle at 50% 45%, rgba(54, 79, 80, .36), transparent 48%),
@@ -731,7 +731,7 @@
       display: grid;
       grid-template-columns: minmax(190px, 240px) minmax(180px, 250px) minmax(0, 1fr);
       gap: 18px;
-      margin-top: 12px;
+      margin-top: 14px;
       padding: 14px 16px;
       border: 1px solid var(--line);
       border-radius: 9px;
@@ -804,20 +804,21 @@
     .gaussian-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 12px;
+      gap: 14px;
+      margin-top: 14px;
     }
     .result-card {
       min-width: 0;
       overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: 9px;
+      border-radius: 10px;
       background: var(--panel);
+      box-shadow: 0 5px 18px rgba(25, 35, 37, .06);
     }
     .result-card header {
       height: auto;
       min-height: 46px;
-      padding: 9px 12px;
+      padding: 10px 13px;
       border-bottom: 1px solid var(--line);
       background: #fbfbf8;
     }
@@ -839,6 +840,28 @@
     }
     .result-card.depth .result-media,
     .result-card.alpha .result-media { background: #101315; }
+    .gaussian-section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-top: 20px;
+      padding: 0 2px;
+    }
+    .gaussian-section-heading h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -.01em;
+    }
+    .gaussian-section-heading p {
+      max-width: 680px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: right;
+    }
+    .viewer-intro { margin-top: 24px; }
     .gaussian-footer {
       display: flex;
       justify-content: space-between;
@@ -889,6 +912,8 @@
       .splat-viewer-actions { justify-content: flex-start; }
       .splat-viewport { height: min(66vh, 540px); }
       .gaussian-grid { grid-template-columns: 1fr; }
+      .gaussian-section-heading { align-items: flex-start; flex-direction: column; }
+      .gaussian-section-heading p { text-align: left; }
       .gaussian-footer { align-items: flex-start; flex-direction: column; }
     }
   </style>
@@ -948,6 +973,61 @@
       <span class="stage2-badge" id="gaussianStageBadge" aria-disabled="true">DynaForward 动态结果待恢复</span>
     </section>
 
+    <div class="process-ribbon" aria-label="展示流程">
+      <span>① 多相机图像输入</span>
+      <span>② 前馈高斯预测</span>
+      <span>③ Gaussian RGB 渲染</span>
+      <span>④ 深度 / Alpha 检查</span>
+    </div>
+
+    <section class="gaussian-controls" aria-label="高斯结果选择">
+      <div class="control-group">
+        <label for="gaussianRunSelect">结果批次</label>
+        <select class="run-select" id="gaussianRunSelect"></select>
+      </div>
+      <div class="control-group">
+        <span class="control-label">相机视角</span>
+        <div class="camera-buttons" id="gaussianCameraButtons"></div>
+      </div>
+      <div class="control-group">
+        <label for="gaussianTimeline">时间帧</label>
+        <div class="timeline-row">
+          <input id="gaussianTimeline" type="range" min="0" max="6" value="3" step="1">
+          <output class="frame-readout" id="gaussianFrameReadout" for="gaussianTimeline">03 / 06</output>
+        </div>
+        <div class="frame-buttons" id="gaussianFrameButtons" aria-label="时间帧快捷选择"></div>
+      </div>
+    </section>
+
+    <div class="gaussian-section-heading">
+      <h3>同视角结果对比</h3>
+      <p>先看原始影像与高斯渲染是否一致；深度和 Alpha 用于检查几何连续性与空洞。</p>
+    </div>
+
+    <section class="gaussian-grid" aria-live="polite">
+      <article class="result-card input">
+        <header><strong id="gaussianInputTitle">输入 / 参考图像</strong><span id="gaussianInputSubtitle">Ground truth RGB</span></header>
+        <div class="result-media"><img id="gaussianInputImage" alt="当前相机输入参考图像"></div>
+      </article>
+      <article class="result-card render">
+        <header><strong>高斯渲染</strong><span>Rendered RGB</span></header>
+        <div class="result-media"><img id="gaussianRenderImage" alt="当前相机高斯渲染图像"></div>
+      </article>
+      <article class="result-card depth">
+        <header><strong id="gaussianDepthTitle">投影深度</strong><span id="gaussianDepthSubtitle">Projected depth</span></header>
+        <div class="result-media"><img id="gaussianDepthImage" alt="当前相机投影深度图"></div>
+      </article>
+      <article class="result-card alpha">
+        <header><strong>累积 Alpha</strong><span>Rendered alpha</span></header>
+        <div class="result-media"><img id="gaussianAlphaImage" alt="当前相机渲染 Alpha 图"></div>
+      </article>
+    </section>
+
+    <div class="gaussian-section-heading viewer-intro">
+      <h3>交互式三维场景</h3>
+      <p>自由旋转用于观察整体覆盖与建筑高差。边缘漂浮和模糊属于当前重建结果，不是网页显示故障。</p>
+    </div>
+
     <section class="splat-viewer-card" id="gaussianSplatCard" aria-labelledby="gaussianSplatTitle">
       <header class="splat-viewer-head">
         <div class="splat-viewer-title">
@@ -976,51 +1056,6 @@
         <span>左键拖拽旋转 · 右键拖拽平移 · 滚轮缩放</span>
         <span id="gaussianSplatDetail">全量场景会保留位置、旋转、尺度、颜色与不透明度。</span>
       </footer>
-    </section>
-
-    <div class="process-ribbon" aria-label="展示流程">
-      <span>① 多相机图像输入</span>
-      <span>② 前馈高斯预测</span>
-      <span>③ Gaussian RGB 渲染</span>
-      <span>④ 深度 / Alpha 检查</span>
-    </div>
-
-    <section class="gaussian-controls" aria-label="高斯结果选择">
-      <div class="control-group">
-        <label for="gaussianRunSelect">结果批次</label>
-        <select class="run-select" id="gaussianRunSelect"></select>
-      </div>
-      <div class="control-group">
-        <span class="control-label">相机视角</span>
-        <div class="camera-buttons" id="gaussianCameraButtons"></div>
-      </div>
-      <div class="control-group">
-        <label for="gaussianTimeline">时间帧</label>
-        <div class="timeline-row">
-          <input id="gaussianTimeline" type="range" min="0" max="6" value="3" step="1">
-          <output class="frame-readout" id="gaussianFrameReadout" for="gaussianTimeline">03 / 06</output>
-        </div>
-        <div class="frame-buttons" id="gaussianFrameButtons" aria-label="时间帧快捷选择"></div>
-      </div>
-    </section>
-
-    <section class="gaussian-grid" aria-live="polite">
-      <article class="result-card input">
-        <header><strong id="gaussianInputTitle">输入 / 参考图像</strong><span id="gaussianInputSubtitle">Ground truth RGB</span></header>
-        <div class="result-media"><img id="gaussianInputImage" alt="当前相机输入参考图像"></div>
-      </article>
-      <article class="result-card render">
-        <header><strong>高斯渲染</strong><span>Rendered RGB</span></header>
-        <div class="result-media"><img id="gaussianRenderImage" alt="当前相机高斯渲染图像"></div>
-      </article>
-      <article class="result-card depth">
-        <header><strong id="gaussianDepthTitle">投影深度</strong><span id="gaussianDepthSubtitle">Projected depth</span></header>
-        <div class="result-media"><img id="gaussianDepthImage" alt="当前相机投影深度图"></div>
-      </article>
-      <article class="result-card alpha">
-        <header><strong>累积 Alpha</strong><span>Rendered alpha</span></header>
-        <div class="result-media"><img id="gaussianAlphaImage" alt="当前相机渲染 Alpha 图"></div>
-      </article>
     </section>
 
     <footer class="gaussian-footer">
