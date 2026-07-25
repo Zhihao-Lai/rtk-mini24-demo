@@ -31,6 +31,7 @@
       kind: "pointcloud",
       title: item.title,
       preview: item.preview,
+      count: Number(item.displayPoints) || 0,
       meta: `${formatCount(item.displayPoints)}点 · ${frames}帧`,
     };
   }
@@ -42,6 +43,7 @@
       kind: "gaussian",
       title: run.title,
       preview: gaussianPreview(run),
+      count: gaussianCount,
       meta: `${gaussianCount ? `${formatCount(gaussianCount)} Gaussian` : "静态结果"} · ${run.frames.length}帧`,
     };
   }
@@ -60,6 +62,7 @@
       card.className = "case-card";
       card.dataset.assetId = asset.id;
       card.dataset.assetKind = asset.kind;
+      card.dataset.assetCount = String(asset.count);
       card.innerHTML = `
         <img src="${asset.preview}" alt="${asset.title}预览" loading="lazy" decoding="async">
         <div class="case-body">
@@ -125,7 +128,7 @@
     assets = [
       ...pointcloudManifest.items.map(pointcloudAsset),
       ...gaussianManifest.runs.filter((run) => run.status === "ready").map(gaussianAsset),
-    ];
+    ].sort((left, right) => right.count - left.count || left.title.localeCompare(right.title, "zh-CN"));
     grids.forEach(renderGrid);
     const requested = assets.find((asset) => asset.id === hashAssetId());
     const fallback = assets.find((asset) => asset.id === pointcloudManifest.defaultScene) || assets[0];
