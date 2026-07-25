@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="data:,">
-  <title>前馈场景重建｜RTK 几何与高斯渲染</title>
+  <title>三维重建资产集合</title>
   <style>
     :root {
       color-scheme: light;
@@ -931,18 +931,38 @@
       .gaussian-section-heading p { text-align: left; }
       .gaussian-footer { align-items: flex-start; flex-direction: column; }
     }
+    body.gaussian-mode .gaussian-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) 128px;
+      grid-template-areas: none;
+      gap: 14px;
+    }
+    body.gaussian-mode #gaussianSplatCard {
+      grid-row: 1;
+      min-height: 0;
+    }
+    body.gaussian-mode #gaussianAssetGrid {
+      grid-area: auto;
+      grid-row: 2;
+      display: grid !important;
+      grid-auto-flow: column;
+      grid-auto-columns: 248px;
+      grid-template-columns: none;
+      gap: 10px;
+      min-height: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 1px 2px 6px;
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="site-brand">
-      <h1>前馈场景重建</h1>
-      <p class="subtitle" id="siteSubtitle">图像 → VGGT 稠密几何 → RTK 地理配准</p>
+      <h1>三维重建资产集合</h1>
+      <p class="subtitle" id="siteSubtitle">三维重建资产统一展示</p>
     </div>
-    <nav class="site-nav" aria-label="展示内容">
-      <button type="button" class="active" data-site-view="rtk">RTK 场景重建</button>
-      <button type="button" data-site-view="gaussian">前馈高斯渲染</button>
-    </nav>
   </header>
   <main id="rtkView" class="app-view">
     <section class="stage">
@@ -972,7 +992,7 @@
     </section>
     <div class="section-head">
       <div>
-        <h2>场景</h2>
+        <h2>资产集合</h2>
       </div>
     </div>
     <section class="gallery" id="sceneGrid"></section>
@@ -1072,6 +1092,7 @@
         <span id="gaussianSplatDetail">全量场景会保留位置、旋转、尺度、颜色与不透明度。</span>
       </footer>
     </section>
+    <section class="gallery" id="gaussianAssetGrid" aria-label="资产集合"></section>
 
     <footer class="gaussian-footer">
       <span class="honesty-note" id="gaussianRunNote">说明：这是已跑通的 DynaForward Stage1 静态 sanity sample，只验证当前静态输出链路，不代表尚未恢复的动态 Stage2。输入与渲染按同一相机、同一帧严格对应。</span>
@@ -1082,7 +1103,7 @@
   <script src="viewerZoom.js?v=20260705-unlimitedzoom"></script>
   <script src="app.js?v=20260717-full-only"></script>
   <script src="gaussian.js?v=20260719-road"></script>
-  <script src="site.js?v=20260719"></script>
+  <script src="collection.js?v=20260726-unified"></script>
   <script type="importmap">
     {
       "imports": {

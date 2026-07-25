@@ -32,7 +32,7 @@ const state = {
 };
 
 function isGaussianVisible() {
-  return window.location.hash === "#gaussian" && !elements.gaussianView.hidden;
+  return !elements.gaussianView.hidden;
 }
 
 function formatBytes(value) {
@@ -300,4 +300,4 @@ window.__gaussian3DState = () => ({
   gaussianCount: Number(state.mesh?.numSplats || state.asset?.gaussianCount || 0),
 });
 
-if (window.location.hash === "#gaussian") ensureGaussian3D();
+if (!elements.gaussianView.hidden) ensureGaussian3D();

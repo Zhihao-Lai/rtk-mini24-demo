@@ -45,10 +45,6 @@ function formatCount(value) {
   return String(value);
 }
 
-function sceneModeLabel(scene) {
-  return scene.rtkMetrics ? "视觉 + RTK" : "纯视觉";
-}
-
 function setActiveView(name) {
   viewButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.view === name);
@@ -56,6 +52,16 @@ function setActiveView(name) {
 }
 
 function cloudSpecFor(scene) {
+  const preferred = scene.lods?.[scene.defaultLod];
+  if (preferred) {
+    return {
+      label: preferred.label || "默认",
+      cloud: preferred.cloud,
+      chunks: preferred.chunks,
+      displayPoints: preferred.displayPoints,
+      cloudMb: preferred.cloudMb,
+    };
+  }
   return {
     label: "全量",
     cloud: scene.cloud,
@@ -320,7 +326,6 @@ async function loadCloud(scene) {
   });
   const framesTotal = scene.framesTotal ?? scene.rtkMetrics?.frames_total ?? scene.inputs.length;
   const metaParts = [
-    sceneModeLabel(scene),
     `${formatCount(scene.displayPoints)}点`,
     `${framesTotal}帧`,
   ];
@@ -400,7 +405,7 @@ function renderGrid(items) {
         <img src="${item.preview}" alt="${item.title}预览" loading="lazy">
       <div class="case-body">
         <h3>${item.title}</h3>
-        <p>${sceneModeLabel(item)} · ${formatCount(item.displayPoints)}点 · ${framesTotal}帧</p>
+        <p>${formatCount(item.displayPoints)}点 · ${framesTotal}帧</p>
       </div>
     `;
     card.addEventListener("click", () => {
@@ -540,26 +545,34 @@ async function boot() {
     throw new Error("加载场景列表失败");
   }
   const manifest = await response.json();
-  sceneItems = manifest.items.filter((item) => !item.stem.includes("_image_only_"));
-  renderGrid(sceneItems);
-  const first = sceneItems.find((item) => item.stem === manifest.defaultScene) || sceneItems[0];
+  sceneItems = manifest.items;
   applyView("angle");
-  await loadCloud(first);
   requestRender();
 }
 
 let bootStarted = false;
+let bootPromise = null;
 
 function ensureRtkBoot() {
   if (bootStarted) {
     requestRender();
-    return;
+    return bootPromise;
   }
   bootStarted = true;
-  boot().catch(showError);
+  bootPromise = boot().catch((error) => {
+    showError(error);
+    throw error;
+  });
+  return bootPromise;
 }
 
 window.__ensureRtkBoot = ensureRtkBoot;
-if (window.location.hash !== "#gaussian") {
-  ensureRtkBoot();
-}
+window.__selectPointCloud = async (stem) => {
+  await ensureRtkBoot();
+  const scene = sceneItems.find((item) => item.stem === stem);
+  if (!scene) {
+    throw new Error(`未知点云资产：${stem}`);
+  }
+  applyView("angle");
+  await loadCloud(scene);
+};

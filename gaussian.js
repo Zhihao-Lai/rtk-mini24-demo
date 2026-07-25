@@ -180,6 +180,22 @@
     manifestLoaded: Boolean(manifest),
   });
   window.__gaussianCurrentRun = () => run;
+  let bootPromise = null;
+  window.__ensureGaussianManifest = () => {
+    if (!bootPromise) {
+      bootPromise = bootGaussian();
+    }
+    return bootPromise;
+  };
+  window.__selectGaussianRun = async (runId) => {
+    await window.__ensureGaussianManifest();
+    const nextRun = manifest?.runs.find((item) => item.id === runId && item.status === "ready");
+    if (!nextRun) {
+      throw new Error(`未知 Gaussian 资产：${runId}`);
+    }
+    runSelect.value = nextRun.id;
+    applyRun(nextRun);
+  };
 
-  bootGaussian().catch(showLoadError);
+  window.__ensureGaussianManifest().catch(showLoadError);
 })();

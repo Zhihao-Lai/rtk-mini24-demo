@@ -1,32 +1,16 @@
 {
   "schemaVersion": 1,
-  "defaultView": "rtk",
+  "defaultView": "assets",
   "views": [
     {
-      "id": "rtk",
-      "label": "RTK 场景重建",
-      "route": "#rtk",
-      "kind": "pointcloud-gallery",
+      "id": "assets",
+      "label": "三维重建资产集合",
+      "route": "#asset=tum_downtown_road170_rtk_anchored_20260717",
+      "kind": "mixed-asset-gallery",
       "manifest": "pointclouds/manifest.json",
-      "status": "ready"
-    },
-    {
-      "id": "gaussian",
-      "label": "前馈高斯渲染",
-      "route": "#gaussian",
-      "kind": "gaussian-result-gallery",
-      "manifest": "gaussian_runs/manifest.json",
-      "status": "ready"
-    },
-    {
-      "id": "legacy",
-      "label": "旧版地图",
-      "route": "#legacy",
-      "kind": "pointcloud-gallery",
-      "manifest": "legacy_maps/manifest.json",
-      "status": "awaiting-assets",
-      "visible": false,
-      "note": "SSD 挂载后可导入；不需要修改 RTK 或 Gaussian 页面数据结构。"
+      "secondaryManifest": "gaussian_runs/manifest.json",
+      "status": "ready",
+      "note": "所有资产在同一列表直接展示，不按校园、道路、RTK或Gaussian分类。"
     }
   ]
 }
