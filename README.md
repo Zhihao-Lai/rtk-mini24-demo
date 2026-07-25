@@ -43,4 +43,6 @@ python3 tools/build_unified_collection.py
 
 两个旧 GitHub Pages 站需要保持发布状态，以便统一页面继续读取其 PCD1 资源。后续新增结果只需更新相应清单，无需新建页面或端口。
 
+唯一公开入口为 `https://zhihao-lai.github.io/rtk-mini24-demo/`。两个旧站的首页和无效路径会跳转到该入口，已有静态点云文件路径继续保留供统一页面读取。
+
 数据来源与许可说明保留在 [ATTRIBUTION.md](ATTRIBUTION.md)。
